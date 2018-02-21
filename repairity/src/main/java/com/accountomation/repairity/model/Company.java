@@ -2,8 +2,6 @@ package com.accountomation.repairity.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -22,7 +20,6 @@ public class Company {
 
 	@Id
 	@Column(name = "co_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public String getId() {
 		return id;
 	}

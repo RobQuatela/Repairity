@@ -2,6 +2,18 @@ package com.accountomation.repairity.model;
 
 import java.sql.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "incidentlog")
 public class IncidentLog {
 
 	private Long id;
@@ -28,6 +40,9 @@ public class IncidentLog {
 		this.incident = incident;
 	}
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ilid")
 	public Long getId() {
 		return id;
 	}
@@ -36,6 +51,7 @@ public class IncidentLog {
 		this.id = id;
 	}
 
+	@Column(name = "ildate")
 	public Date getLogDate() {
 		return logDate;
 	}
@@ -44,6 +60,7 @@ public class IncidentLog {
 		this.logDate = logDate;
 	}
 
+	@Column(name = "ilnotes")
 	public String getNotes() {
 		return notes;
 	}
@@ -52,6 +69,9 @@ public class IncidentLog {
 		this.notes = notes;
 	}
 
+	@ManyToOne(targetEntity = Incident.class)
+	@JoinColumn(name = "incident", nullable = false,
+		foreignKey = @ForeignKey(name = "fk_incidentlog_incident"))
 	public Incident getIncident() {
 		return incident;
 	}

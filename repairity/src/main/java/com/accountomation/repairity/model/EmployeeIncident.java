@@ -1,5 +1,17 @@
 package com.accountomation.repairity.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "employeeincident")
 public class EmployeeIncident {
 
 	private Long id;
@@ -23,6 +35,9 @@ public class EmployeeIncident {
 		this.incident = incident;
 	}
 
+	@Id
+	@Column(name = "eiid")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
 		return id;
 	}
@@ -31,6 +46,9 @@ public class EmployeeIncident {
 		this.id = id;
 	}
 
+	@ManyToOne(targetEntity = Employee.class)
+	@JoinColumn(name = "employee", nullable = false,
+		foreignKey = @ForeignKey(name = "fk_employeeincident_employee"))
 	public Employee getEmployee() {
 		return employee;
 	}
@@ -39,6 +57,9 @@ public class EmployeeIncident {
 		this.employee = employee;
 	}
 
+	@ManyToOne(targetEntity = Incident.class)
+	@JoinColumn(name = "incident", nullable = false,
+		foreignKey = @ForeignKey(name = "fk_employeeincident_incident"))
 	public Incident getIncident() {
 		return incident;
 	}

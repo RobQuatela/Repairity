@@ -2,6 +2,13 @@ package com.accountomation.repairity.model;
 
 import java.sql.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "Incident")
 public class Incident {
 
 	private String id;
@@ -38,6 +45,8 @@ public class Incident {
 		this.amount = amount;
 	}
 
+	@Id
+	@Column(name = "iid")
 	public String getId() {
 		return id;
 	}
@@ -46,6 +55,7 @@ public class Incident {
 		this.id = id;
 	}
 
+	@Column(name = "istatus")
 	public String getStatus() {
 		return status;
 	}
@@ -54,6 +64,7 @@ public class Incident {
 		this.status = status;
 	}
 
+	@Column(name = "istart")
 	public Date getStart() {
 		return start;
 	}
@@ -62,6 +73,7 @@ public class Incident {
 		this.start = start;
 	}
 
+	@Column(name = "istop")
 	public Date getStop() {
 		return stop;
 	}
@@ -70,6 +82,7 @@ public class Incident {
 		this.stop = stop;
 	}
 
+	@Column(name = "icustomer")
 	public String getCustomer() {
 		return customer;
 	}
@@ -78,6 +91,7 @@ public class Incident {
 		this.customer = customer;
 	}
 
+	@Column(name = "iaddress")
 	public String getAddress() {
 		return address;
 	}
@@ -86,6 +100,7 @@ public class Incident {
 		this.address = address;
 	}
 
+	@Column(name = "icity")
 	public String getCity() {
 		return city;
 	}
@@ -94,6 +109,7 @@ public class Incident {
 		this.city = city;
 	}
 
+	@Column(name = "istate")
 	public String getState() {
 		return state;
 	}
@@ -102,6 +118,7 @@ public class Incident {
 		this.state = state;
 	}
 
+	@Column(name = "izip")
 	public String getZip() {
 		return zip;
 	}
@@ -110,6 +127,7 @@ public class Incident {
 		this.zip = zip;
 	}
 
+	@Column(name = "icomplaint")
 	public String getComplaint() {
 		return complaint;
 	}
@@ -118,6 +136,7 @@ public class Incident {
 		this.complaint = complaint;
 	}
 
+	@Column(name = "iphone")
 	public String getPhone() {
 		return phone;
 	}
@@ -126,6 +145,7 @@ public class Incident {
 		this.phone = phone;
 	}
 
+	@Column(name = "iamount")
 	public double getAmount() {
 		return amount;
 	}

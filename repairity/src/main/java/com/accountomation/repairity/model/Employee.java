@@ -1,5 +1,15 @@
 package com.accountomation.repairity.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "employee")
 public class Employee {
 
 	private String id;
@@ -13,6 +23,8 @@ public class Employee {
 		this.company = company;
 	}
 
+	@Id
+	@Column(name = "eid")
 	public String getId() {
 		return id;
 	}
@@ -21,6 +33,7 @@ public class Employee {
 		this.id = id;
 	}
 
+	@Column(name = "ename")
 	public String getName() {
 		return name;
 	}
@@ -29,6 +42,9 @@ public class Employee {
 		this.name = name;
 	}
 
+	@ManyToOne(targetEntity = Company.class)
+	@JoinColumn(name = "company", nullable = false,
+		foreignKey = @ForeignKey(name = "fk_employee_company"))
 	public Company getCompany() {
 		return company;
 	}
