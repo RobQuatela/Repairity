@@ -3,6 +3,7 @@ package com.accountomation.repairity.repository;
 import java.util.List;
 
 import com.accountomation.repairity.model.Company;
+import com.accountomation.repairity.model.Employee;
 
 public interface CompanyRepository {
 
@@ -15,4 +16,8 @@ public interface CompanyRepository {
 	public void update(Company company);
 	
 	public void delete(Company company);
+	
+	public void addEmployee(Company company, Employee employee);
+	
+	public List<Employee> listEmployees(Company company);
 }

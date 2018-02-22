@@ -5,53 +5,60 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import com.accountomation.repairity.model.Company;
-import com.accountomation.repairity.model.Employee;
+import com.accountomation.repairity.model.Incident;
+import com.accountomation.repairity.model.IncidentLog;
 
-public class EmployeeRepositoryImpl implements EmployeeRepository {
+@Repository("incidentRepository")
+public class IncidentRepositoryImpl implements IncidentRepository {
 
 	@Autowired
 	private SessionFactory sessionFactory;
 	
 	@Override
-	public void save(Employee emp) {
+	public void save(Incident incident) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		session.saveOrUpdate(emp);
+		session.saveOrUpdate(incident);
 		session.getTransaction().commit();
 		session.close();
 	}
 
 	@Override
-	public void update(Employee emp) {
+	public void update(Incident incident) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		session.update(emp);
+		session.update(incident);
 		session.getTransaction().commit();
 		session.close();
 	}
 
 	@Override
-	public void delete(Employee emp) {
+	public void delete(Incident incident) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		session.delete(emp);
+		session.delete(incident);
 		session.getTransaction().commit();
 		session.close();
 	}
 
 	@Override
-	public Employee get(String id) {
+	public Incident get(String id) {
 		Session session = sessionFactory.openSession();
-		Employee emp = session.load(Employee.class, id);
-		return emp;
+		return session.load(Incident.class, id);
 	}
 
 	@Override
-	public List<Employee> getEmployees(Company company) {
+	public List<Incident> list() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void log(IncidentLog incidentLog) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

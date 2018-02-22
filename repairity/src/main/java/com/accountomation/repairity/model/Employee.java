@@ -16,6 +16,10 @@ public class Employee {
 	private String name;
 	private Company company;
 	
+	public Employee() {
+		
+	}
+	
 	public Employee(String id, String name, Company company) {
 		super();
 		this.id = id;

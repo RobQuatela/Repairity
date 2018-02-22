@@ -2,6 +2,7 @@ package com.accountomation.repairity.repository;
 
 import java.util.List;
 
+import com.accountomation.repairity.model.Company;
 import com.accountomation.repairity.model.Employee;
 
 public interface EmployeeRepository {
@@ -14,5 +15,5 @@ public interface EmployeeRepository {
 	
 	public Employee get(String id);
 	
-	public List<Employee> getEmployees();
+	public List<Employee> getEmployees(Company company);
 }

@@ -5,53 +5,55 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import com.accountomation.repairity.model.Company;
-import com.accountomation.repairity.model.Employee;
+import com.accountomation.repairity.model.Incident;
+import com.accountomation.repairity.model.IncidentLog;
 
-public class EmployeeRepositoryImpl implements EmployeeRepository {
+@Repository("incidentLogRepository")
+public class IncidentLogRepositoryImpl implements IncidentLogRepository {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@Override
-	public void save(Employee emp) {
+	public void save(IncidentLog incidentLog) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		session.saveOrUpdate(emp);
+		session.saveOrUpdate(incidentLog);
 		session.getTransaction().commit();
 		session.close();
 	}
 
 	@Override
-	public void update(Employee emp) {
+	public void update(IncidentLog incidentLog) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		session.update(emp);
+		session.update(incidentLog);
 		session.getTransaction().commit();
 		session.close();
 	}
 
 	@Override
-	public void delete(Employee emp) {
+	public void delete(IncidentLog incidentLog) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		session.delete(emp);
+		session.delete(incidentLog);
 		session.getTransaction().commit();
 		session.close();
 	}
 
 	@Override
-	public Employee get(String id) {
+	public IncidentLog get(Long id) {
 		Session session = sessionFactory.openSession();
-		Employee emp = session.load(Employee.class, id);
-		return emp;
+		return session.load(IncidentLog.class, id);
 	}
 
 	@Override
-	public List<Employee> getEmployees(Company company) {
+	public List<IncidentLog> list(Incident incident) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	
 }

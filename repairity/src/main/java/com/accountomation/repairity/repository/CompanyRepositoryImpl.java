@@ -2,18 +2,28 @@ package com.accountomation.repairity.repository;
 
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.accountomation.repairity.model.Company;
-import com.accountomation.repairity.util.HibernateUtil;
+import com.accountomation.repairity.model.Employee;
 
 @Repository("companyRepository")
 public class CompanyRepositoryImpl implements CompanyRepository {
 
+	@Autowired
+	private SessionFactory sessionFactory;
+	
 	@Override
 	public void save(Company company) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		session.save(company);
 		session.getTransaction().commit();
@@ -22,9 +32,8 @@ public class CompanyRepositoryImpl implements CompanyRepository {
 
 	@Override
 	public Company getCompany(String id) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		Company company = session.load(Company.class, id);
-		return company;
+		Session session = sessionFactory.openSession();
+		return session.load(Company.class, id);
 	}
 
 	@Override
@@ -35,7 +44,7 @@ public class CompanyRepositoryImpl implements CompanyRepository {
 
 	@Override
 	public void update(Company company) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		session.update(company);
 		session.getTransaction().commit();
@@ -44,11 +53,34 @@ public class CompanyRepositoryImpl implements CompanyRepository {
 
 	@Override
 	public void delete(Company company) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
+		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		session.delete(company);
 		session.getTransaction().commit();
 		session.close();
+	}
+
+	@Override
+	public void addEmployee(Company company, Employee employee) {
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		Company companyA = session.load(Company.class, company.getId());
+		companyA.addEmployee(employee);
+		session.getTransaction().commit();
+		session.close();
+	}
+
+	@Override
+	public List<Employee> listEmployees(Company company) {
+		Session session = sessionFactory.openSession();
+		CriteriaBuilder cb = session.getCriteriaBuilder();
+		CriteriaQuery<Employee> criteria = cb.createQuery(Employee.class);
+		Root<Employee> root = criteria.from(Employee.class);
+		criteria
+			.select(root)
+			.where(cb.equal(root.get("company"), company));
+		Query<Employee> query = session.createQuery(criteria);
+		return query.getResultList();
 	}
 
 }

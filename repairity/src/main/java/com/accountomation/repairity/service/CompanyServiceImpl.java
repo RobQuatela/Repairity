@@ -3,12 +3,16 @@ package com.accountomation.repairity.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.accountomation.repairity.model.Company;
+import com.accountomation.repairity.model.Employee;
 import com.accountomation.repairity.repository.CompanyRepository;
 
 @Service("companyService")
+@Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class CompanyServiceImpl implements CompanyService {
 
 	//@Autowired
@@ -42,9 +46,19 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public Company findCompany(String id) {
+	public Company find(String id) {
 		Company company = companyRepository.getCompany(id);
 		return company;
+	}
+
+	@Override
+	public void addEmployee(Company company, Employee employee) {
+		companyRepository.addEmployee(company, employee);
+	}
+
+	@Override
+	public List<Employee> getEmployees(Company company) {
+		return companyRepository.listEmployees(company);
 	}
 
 }

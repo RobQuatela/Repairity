@@ -1,5 +1,8 @@
 
 
+import org.hibernate.HibernateException;
+import org.hibernate.SessionFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,4 +21,16 @@ public class AppConfig {
 	//public CompanyRepository getCompanyRepository() {
 	//	return new CompanyRepositoryImpl();
 	//}
+	
+	@Bean(name = "sessionFactory")
+	public SessionFactory getSessionFactory() {
+		SessionFactory sessionFactory = null;
+		try {
+			sessionFactory = new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		}
+		
+		return sessionFactory;
+	}
 }

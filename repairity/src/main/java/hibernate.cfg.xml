@@ -11,6 +11,8 @@
   <property name="hibernate.show_sql">true</property>
   <property name="hibernate.hbm2ddl.auto">create</property>
   <mapping class="com.accountomation.repairity.model.Company"/>
+  <mapping class="com.accountomation.repairity.model.Incident"/>
+  <mapping class="com.accountomation.repairity.model.Employee"/>
   <!-- <mapping class="com.accountomation.repairity.Employee"/>
   <mapping class="com.accountomation.repairity.EmployeeIncident"/>
   <mapping class="com.accountomation.repairity.Incident"/>
