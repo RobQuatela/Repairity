@@ -12,7 +12,6 @@ import com.accountomation.repairity.model.Employee;
 import com.accountomation.repairity.repository.CompanyRepository;
 
 @Service("companyService")
-@Scope(ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class CompanyServiceImpl implements CompanyService {
 
 	//@Autowired

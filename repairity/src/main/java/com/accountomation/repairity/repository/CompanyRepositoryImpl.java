@@ -18,8 +18,12 @@ import com.accountomation.repairity.model.Employee;
 @Repository("companyRepository")
 public class CompanyRepositoryImpl implements CompanyRepository {
 
-	@Autowired
 	private SessionFactory sessionFactory;
+	
+	@Autowired
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 	
 	@Override
 	public void save(Company company) {
