@@ -2,9 +2,13 @@ package com.accountomation.repairity.config;
 
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -24,6 +28,20 @@ public class MvcConfig implements WebMvcConfigurer {
 		viewResolver.setSuffix(".jsp");
 		
 		return viewResolver;
+	}
+	
+	@Bean
+	public MessageSource messageSource() {
+		ResourceBundleMessageSource source = new ResourceBundleMessageSource();
+		source.setBasename("messages");
+		return source;
+	}
+	
+	@Bean
+	public Validator getValidator() {
+		LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
+		validator.setValidationMessageSource(messageSource());
+		return validator;
 	}
 	
 	@Bean(name = "sessionFactory")
