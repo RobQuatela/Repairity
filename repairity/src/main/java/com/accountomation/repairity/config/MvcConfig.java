@@ -21,7 +21,7 @@ import org.springframework.web.servlet.view.JstlView;
 public class MvcConfig implements WebMvcConfigurer {
 
 	@Bean
-	public ViewResolver viewResolver() {
+	public InternalResourceViewResolver viewResolver() {
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
 		viewResolver.setViewClass(JstlView.class);
 		viewResolver.setPrefix("/WEB-INF/Views");
@@ -29,6 +29,7 @@ public class MvcConfig implements WebMvcConfigurer {
 		
 		return viewResolver;
 	}
+	 
 	
 	@Bean
 	public MessageSource messageSource() {

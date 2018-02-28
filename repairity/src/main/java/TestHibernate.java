@@ -16,7 +16,7 @@ public class TestHibernate {
 
 	public static void main(String[] args) {
 		
-		ApplicationContext appContext = new AnnotationConfigApplicationContext(AppConfig.class);
+		ApplicationContext appContext = new AnnotationConfigApplicationContext(com.accountomation.repairity.config.AppConfig.class);
 		
 		Company company = new Company("SSB", "ATLANTA");
 		CompanyService service = appContext.getBean("companyService", CompanyService.class);

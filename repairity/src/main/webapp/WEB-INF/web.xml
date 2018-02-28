@@ -8,6 +8,7 @@
     <welcome-file>default.html</welcome-file>
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
+    <welcome-file>addCompany.jsp</welcome-file>
   </welcome-file-list>
   
 <!-- The front controller of this Spring Web application, responsible for handling all application requests -->
