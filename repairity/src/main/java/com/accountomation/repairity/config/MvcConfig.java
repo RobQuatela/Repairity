@@ -24,7 +24,7 @@ public class MvcConfig implements WebMvcConfigurer {
 	public InternalResourceViewResolver viewResolver() {
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
 		viewResolver.setViewClass(JstlView.class);
-		viewResolver.setPrefix("/WEB-INF/Views");
+		viewResolver.setPrefix("/WEB-INF/Views/");
 		viewResolver.setSuffix(".jsp");
 		
 		return viewResolver;
@@ -34,7 +34,9 @@ public class MvcConfig implements WebMvcConfigurer {
 	@Bean
 	public MessageSource messageSource() {
 		ResourceBundleMessageSource source = new ResourceBundleMessageSource();
-		source.setBasename("messages");
+		//source.setBasename("messages");
+		source.setBasename("/WEB-INF/incident");
+		source.setDefaultEncoding("UTF-8");
 		return source;
 	}
 	

@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h2>Incident Details</h2>
-	<p>Invoice No: ${param.invoiceNo } </p>
-	<p>Status: ${param.status }</p>
+	<p>Invoice No: ${incident.id } </p>
+	<p>Status: ${incident.status }</p>
 </body>
 </html>

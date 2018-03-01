@@ -8,5 +8,7 @@
 </head>
 <body>
 	<h1>Welcome to Incidents page</h1>
+	
+	<a href="new">New Incident</a>
 </body>
 </html>
