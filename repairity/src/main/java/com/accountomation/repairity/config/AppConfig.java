@@ -23,7 +23,7 @@ public class AppConfig {
 	//	return new CompanyRepositoryImpl();
 	//}
 	
-	@Bean(name = "sessionFactory")
+/*	@Bean(name = "sessionFactory")
 	public SessionFactory getSessionFactory() {
 		SessionFactory sessionFactory = null;
 		try {
@@ -33,5 +33,5 @@ public class AppConfig {
 		}
 		
 		return sessionFactory;
-	}
+	}*/
 }

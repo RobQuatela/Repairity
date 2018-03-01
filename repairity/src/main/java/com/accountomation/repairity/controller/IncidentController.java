@@ -5,9 +5,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.accountomation.repairity.model.Incident;
 import com.accountomation.repairity.service.IncidentService;
@@ -21,28 +21,33 @@ public class IncidentController {
 	
 	@RequestMapping("/")
 	public String showHomePage() {
-		return "index";
+		return "/IncidentViews/index";
 	}
 	
 	@RequestMapping("/new")
 	public String newIncident() {
-		return "newIncident";
+		return "/IncidentViews/newIncident";
 	}
 	
 	@RequestMapping("/showIncident")
 	public String showIncident() {
-		return "showIncident";
+		return "/IncidentViews/showIncident";
 	}
 	
 	@RequestMapping(value = "/addIncident", method = RequestMethod.POST)
-	public String saveIncident(Model model, HttpServletRequest request) {
-		Incident incident = new Incident();
-		incident.setId(request.getParameter("txtInvoice"));
-		incident.setStatus(request.getParameter("txtStatus"));
+	public String saveIncident(Model model, 
+			@RequestParam("txtInvoice") String invoice,
+			@RequestParam("txtStatus") String status
+			) {
 		
-		incidentService.saveIncident(incident);
+		Incident incident = new Incident();
+
+		incident.setId(invoice);
+		incident.setStatus(status);
+		
+		//incidentService.saveIncident(incident);
 		model.addAttribute("incident", incident);
 		
-		return "showIncident";
+		return "/IncidentViews/showIncident";
 	}
 }

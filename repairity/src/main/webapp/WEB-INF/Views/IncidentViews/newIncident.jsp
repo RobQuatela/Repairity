@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title><spring:message code="lbl.title" /></title>
+<title>New Incident</title>
 </head>
 <body>
 	<h2>Create new incident</h2>

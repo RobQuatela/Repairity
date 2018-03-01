@@ -35,7 +35,7 @@ public class MvcConfig implements WebMvcConfigurer {
 	public MessageSource messageSource() {
 		ResourceBundleMessageSource source = new ResourceBundleMessageSource();
 		//source.setBasename("messages");
-		source.setBasename("/WEB-INF/incident");
+		source.setBasenames("WEB-INF/incident");
 		source.setDefaultEncoding("UTF-8");
 		return source;
 	}
@@ -47,7 +47,7 @@ public class MvcConfig implements WebMvcConfigurer {
 		return validator;
 	}
 	
-	@Bean(name = "sessionFactory")
+/*	@Bean(name = "sessionFactory")
 	public SessionFactory getSessionFactory() {
 		SessionFactory sessionFactory = null;
 		try {
@@ -57,7 +57,7 @@ public class MvcConfig implements WebMvcConfigurer {
 		}
 		
 		return sessionFactory;
-	}
+	}*/
 	
 	
 }
