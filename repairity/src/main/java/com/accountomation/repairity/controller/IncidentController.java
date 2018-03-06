@@ -1,10 +1,11 @@
 package com.accountomation.repairity.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,9 +46,23 @@ public class IncidentController {
 		incident.setId(invoice);
 		incident.setStatus(status);
 		
-		//incidentService.saveIncident(incident);
+		incidentService.saveIncident(incident);
 		model.addAttribute("incident", incident);
 		
-		return "/IncidentViews/showIncident";
+		return "redirect:/incident/showIncident";
+	}
+	
+	@RequestMapping("/list")
+	public String listIncidents(Model model) {
+		List<Incident> incidents = incidentService.getIncidents();
+		model.addAttribute("incidents", incidents);
+		return "/IncidentViews/listIncidents";
+	}
+	
+	@GetMapping("/edit")
+	public String updateIncident(@RequestParam("invoiceNo") String invoice, Model model) {
+		Incident incident = incidentService.getIncident(invoice);
+		model.addAttribute("incident", incident);
+		return "/IncidentViews/newIncident";
 	}
 }

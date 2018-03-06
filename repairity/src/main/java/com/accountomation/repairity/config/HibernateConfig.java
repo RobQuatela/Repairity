@@ -42,7 +42,7 @@ public class HibernateConfig {
 /*        factoryBean.setConfigLocation(context.getResource("classpath:hibernate.cfg.xml"));
         factoryBean.setAnnotatedClasses(Company.class, Employee.class, Incident.class);*/
         factoryBean.setDataSource(dataSource());
-        factoryBean.setAnnotatedClasses(Company.class, Employee.class, Incident.class);
+        factoryBean.setPackagesToScan("com.accountomation.repairity.model");
         factoryBean.setHibernateProperties(hibernateProperties());
         return factoryBean;
     }
@@ -58,7 +58,7 @@ public class HibernateConfig {
     public DataSource dataSource() {
     	BasicDataSource dataSource = new BasicDataSource();
     	dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-    	dataSource.setUrl("jdbc:mysql://LocalHost:3306/repairity");
+    	dataSource.setUrl("jdbc:mysql://LocalHost:3306/repairity?useSSL=false");
     	dataSource.setUsername("");
     	dataSource.setPassword("");
     	

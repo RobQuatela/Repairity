@@ -1,9 +1,11 @@
 package com.accountomation.repairity.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -18,11 +20,12 @@ public class IncidentRepositoryImpl implements IncidentRepository {
 	
 	@Override
 	public void save(Incident incident) {
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		session.saveOrUpdate(incident);
-		session.getTransaction().commit();
-		session.close();
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			session.saveOrUpdate(incident);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -45,14 +48,29 @@ public class IncidentRepositoryImpl implements IncidentRepository {
 
 	@Override
 	public Incident get(String id) {
-		Session session = sessionFactory.openSession();
-		return session.load(Incident.class, id);
+		Incident incident = new Incident();
+		try {
+		Session session = sessionFactory.getCurrentSession();
+		incident = (Incident) session.load(Incident.class, id);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return incident;
 	}
 
 	@Override
 	public List<Incident> list() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Incident> incidents = new ArrayList<>();
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			Query<Incident> query = session.createQuery("From Incident", Incident.class);
+			incidents = query.getResultList();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return incidents;
 	}
 
 	@Override

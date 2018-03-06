@@ -1,8 +1,5 @@
 
 
-import org.hibernate.HibernateException;
-import org.hibernate.SessionFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -22,7 +19,7 @@ public class AppConfig {
 	//	return new CompanyRepositoryImpl();
 	//}
 	
-	@Bean(name = "sessionFactory")
+/*	@Bean(name = "sessionFactory")
 	public SessionFactory getSessionFactory() {
 		SessionFactory sessionFactory = null;
 		try {
@@ -32,5 +29,5 @@ public class AppConfig {
 		}
 		
 		return sessionFactory;
-	}
+	}*/
 }
