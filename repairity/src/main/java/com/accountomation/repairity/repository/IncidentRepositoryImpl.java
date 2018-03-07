@@ -17,12 +17,13 @@ public class IncidentRepositoryImpl implements IncidentRepository {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@Override
 	public void save(Incident incident) {
 		try {
 			Session session = sessionFactory.getCurrentSession();
-			session.saveOrUpdate(incident);
+			//session.saveOrUpdate(incident);
+			session.save(incident);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -50,12 +51,15 @@ public class IncidentRepositoryImpl implements IncidentRepository {
 	public Incident get(String id) {
 		Incident incident = new Incident();
 		try {
-		Session session = sessionFactory.getCurrentSession();
-		incident = (Incident) session.load(Incident.class, id);
-		} catch(Exception e) {
+			Session session = sessionFactory.getCurrentSession();
+			incident = (Incident) session.get(Incident.class, id);
+			if(incident == null) {
+				return null;
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return incident;
 	}
 
@@ -66,17 +70,17 @@ public class IncidentRepositoryImpl implements IncidentRepository {
 			Session session = sessionFactory.getCurrentSession();
 			Query<Incident> query = session.createQuery("From Incident", Incident.class);
 			incidents = query.getResultList();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return incidents;
 	}
 
 	@Override
 	public void log(IncidentLog incidentLog) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

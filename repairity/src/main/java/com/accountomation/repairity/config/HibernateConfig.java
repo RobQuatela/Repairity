@@ -24,18 +24,6 @@ public class HibernateConfig {
 	@Autowired
 	private ApplicationContext context;
 	
-/*	@Bean(name = "sessionFactory")
-	public SessionFactory getSessionFactory() {
-		SessionFactory sessionFactory = null;
-		try {
-			sessionFactory = new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
-		} catch (HibernateException e) {
-			e.printStackTrace();
-		}
-		
-		return sessionFactory;
-	}*/
-	
     @Bean
     public LocalSessionFactoryBean getSessionFactory() {
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();

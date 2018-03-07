@@ -1,7 +1,5 @@
 package com.accountomation.repairity.config;
 
-import org.hibernate.HibernateException;
-import org.hibernate.SessionFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -10,8 +8,8 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
@@ -49,17 +47,9 @@ public class MvcConfig implements WebMvcConfigurer {
 		return validator;
 	}
 	
-/*	@Bean(name = "sessionFactory")
-	public SessionFactory getSessionFactory() {
-		SessionFactory sessionFactory = null;
-		try {
-			sessionFactory = new org.hibernate.cfg.Configuration().configure().buildSessionFactory();
-		} catch (HibernateException e) {
-			e.printStackTrace();
-		}
-		
-		return sessionFactory;
-	}*/
+	public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+		registry.addResourceHandler("/resources/images").addResourceLocations("/resources/");
+	}
 	
 	
 }
