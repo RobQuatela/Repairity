@@ -27,8 +27,6 @@ public class HibernateConfig {
     @Bean
     public LocalSessionFactoryBean getSessionFactory() {
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
-/*        factoryBean.setConfigLocation(context.getResource("classpath:hibernate.cfg.xml"));
-        factoryBean.setAnnotatedClasses(Company.class, Employee.class, Incident.class);*/
         factoryBean.setDataSource(dataSource());
         factoryBean.setPackagesToScan("com.accountomation.repairity.model");
         factoryBean.setHibernateProperties(hibernateProperties());
@@ -47,8 +45,8 @@ public class HibernateConfig {
     	BasicDataSource dataSource = new BasicDataSource();
     	dataSource.setDriverClassName("com.mysql.jdbc.Driver");
     	dataSource.setUrl("jdbc:mysql://LocalHost:3306/repairity?useSSL=false");
-    	dataSource.setUsername("");
-    	dataSource.setPassword("");
+    	dataSource.setUsername("root");
+    	dataSource.setPassword("P@ssG0!");
     	
     	return dataSource;
     }

@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.accountomation.repairity.model.Incident;
 import com.accountomation.repairity.service.IncidentService;
@@ -64,5 +66,13 @@ public class IncidentController {
 		Incident incident = incidentService.getIncident(invoice);
 		model.addAttribute("incident", incident);
 		return "/IncidentViews/newIncident";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public Incident getIncident(@PathVariable("id") String invoiceNo) {
+		System.out.println("Request invoice no: " + invoiceNo);
+		Incident incident = incidentService.getIncident(invoiceNo);
+		return incident;
 	}
 }
