@@ -1,38 +1,41 @@
 package com.accountomation.repairity.model;
 
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "user_role")
-public class UserRole implements Serializable {
+public class UserRole {
 
-	private User user;
+	private long roleId;
 	private String role;
+	//private List<User> users = new ArrayList<>();
 	
-	public UserRole(User user, String role) {
-		this.user = user;
+	public UserRole(int roleId, String role) {
+		this.roleId = roleId;
 		this.role = role;
 	}
 
+
 	@Id
-	@OneToOne
-	@JoinColumn(name = "role_user", nullable = false,
-		foreignKey = @ForeignKey(name = "fk_user_role_user"))
-	public User getUser() {
-		return user;
+	@Column(name = "role_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public long getRoleId() {
+		return roleId;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setRoleId(long roleId) {
+		this.roleId = roleId;
 	}
+
+
 
 	@Column(name = "role_role")
 	public String getRole() {
@@ -42,6 +45,16 @@ public class UserRole implements Serializable {
 	public void setRole(String role) {
 		this.role = role;
 	}
+
+
+/*	public List<User> getUsers() {
+		return users;
+	}
+
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}*/
 	
 	
 }

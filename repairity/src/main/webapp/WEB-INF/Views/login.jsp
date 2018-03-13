@@ -32,8 +32,8 @@
 							placeholder="Password" name="password" />
 						</div>
 						
-						<input type="hidden" name="${_csrf.parameterName }"
-						value="${_csrf.token }" />
+<%-- 						<input type="hidden" name="${_csrf.parameterName }"
+						value="${_csrf.token }" /> --%>
 						
 						<input type="submit" value="Login" name="submit"
 							class="btn btn-primary" />

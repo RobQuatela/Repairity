@@ -16,7 +16,7 @@ public class TestHibernate {
 
 	public static void main(String[] args) {
 		
-		ApplicationContext appContext = new AnnotationConfigApplicationContext(com.accountomation.repairity.config.AppConfig.class);
+/*		ApplicationContext appContext = new AnnotationConfigApplicationContext(com.accountomation.repairity.config.AppConfig.class);
 		
 		Company company = new Company("SSB", "ATLANTA");
 		CompanyService service = appContext.getBean("companyService", CompanyService.class);
@@ -39,7 +39,7 @@ public class TestHibernate {
 		List<Employee> employees = service.getEmployees(company);
 		
 		System.out.println(service.find("HOU").getName() + " has been inserted along with " + incidentService.getIncident("1234").getId());
-		System.out.println(employees.size());
+		System.out.println(employees.size());*/
 		
 		
 		
