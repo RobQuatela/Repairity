@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "employee")
+@Table(name = "tbemployee")
 public class Employee {
 
 	private String id;
@@ -28,7 +28,7 @@ public class Employee {
 	}
 
 	@Id
-	@Column(name = "eid")
+	@Column(name = "emp_id")
 	public String getId() {
 		return id;
 	}
@@ -37,7 +37,7 @@ public class Employee {
 		this.id = id;
 	}
 
-	@Column(name = "ename")
+	@Column(name = "emp_name")
 	public String getName() {
 		return name;
 	}
@@ -48,7 +48,7 @@ public class Employee {
 
 	@ManyToOne(targetEntity = Company.class)
 	@JoinColumn(name = "company", nullable = false,
-		foreignKey = @ForeignKey(name = "fk_employee_company"))
+		foreignKey = @ForeignKey(name = "fk_tbemployee_company"))
 	public Company getCompany() {
 		return company;
 	}

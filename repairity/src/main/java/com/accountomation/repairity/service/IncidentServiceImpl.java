@@ -27,8 +27,8 @@ public class IncidentServiceImpl implements IncidentService {
 	}
 
 	@Override
-	public void updateIncident(Incident incident) {
-		incidentRepository.update(incident);
+	public Incident updateIncident(Incident incident) {
+		return incidentRepository.update(incident);
 	}
 
 	@Override
@@ -51,6 +51,11 @@ public class IncidentServiceImpl implements IncidentService {
 	public void log(IncidentLog incidentLog) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<Incident> getIncidents(String id) {
+		return incidentRepository.list(id);
 	}
 
 }

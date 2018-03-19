@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<%@ include file="IncidentViews/header.jsp" %>
+	<%@ include file="/WEB-INF/Views/header.jsp" %>
 	
 	<div class="container">
 		<div class="col-6 offset-3 align-self-center">
@@ -54,7 +54,7 @@
 		</div>
 	</div>
 	
-	<%@ include file="IncidentViews/footer.jsp" %>
+	<%@ include file="/WEB-INF/Views/footer.jsp" %>
 
 </body>
 </html>

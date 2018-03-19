@@ -10,14 +10,23 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
 	$(document).ready(function() {
-		console.log("setting up functions...");
 		$("#msgSuccess").hide();
 		$("#msgFail").hide();
 		$("#incidentForm").submit(function(event) {
 			event.preventDefault();
 			submitAJAX();
 		});
+
+		$("#btnExit").click(function() {
+			event.preventDefault();
+			$("body").fadeOut(300, newPage);
+			//window.location.href = "/repairity/incident/find";
+		});
 	});
+
+	function newPage() {
+		window.location.href = "/repairity/incident/find";
+	}
 
 	function submitAJAX() {
 		var incdt = {};
@@ -46,9 +55,18 @@
 	}
 </script>
 </head>
-<body>
-	<%@ include file="header.jsp"%>
-	<h2>Create new incident</h2>
+<body id="body">
+	<%@ include file="/WEB-INF/Views/header.jsp"%>
+	<div class="row">
+	<div class="col-10">
+	<div class="jumbotron jumbotron-fluid">
+		<h2 class="display-1">Create new incident</h2>
+	</div>
+	</div>
+	<div class="col-2">
+		<button class="btn btn-primary" id="btnExit">Cancel</button>
+	</div>
+	</div>
 	<form name="incidentForm" id="incidentForm">
 		<div class="input-group mb-3">
 			<div class="input-group-prepend">
@@ -60,7 +78,7 @@
 		</div>
 		<div class="input-group mb-3">
 			<div class="input-group-prepend">
-				<span class="input-group-text" id="inputGroup-sizing-default">Date</span>
+				<span class="input-group-text" id="inputGroup-sizing-default">Start &nbsp;</span>
 			</div>
 			<input type="date" class="form-control" aria-label="Default"
 				aria-describedby="inputGroup-sizing-default" id="txtDate">
@@ -126,6 +144,6 @@
 		</tr>
 		</table> -->
 	</form>
-	<%@ include file="footer.jsp"%>
+	<%@ include file="/WEB-INF/Views/footer.jsp"%>
 </body>
 </html>

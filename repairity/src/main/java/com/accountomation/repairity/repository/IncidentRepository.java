@@ -9,13 +9,15 @@ public interface IncidentRepository {
 
 	public void save(Incident incident);
 	
-	public void update(Incident incident);
+	public Incident update(Incident incident);
 	
 	public void delete(Incident incident);
 	
 	public Incident get(String id);
 	
 	public List<Incident> list();
+	
+	public List<Incident> list(String id);
 	
 	public void log(IncidentLog incidentLog);
 }

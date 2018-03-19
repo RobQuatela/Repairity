@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div class="container">
-		<%@ include file="header.jsp" %>
+		<%@ include file="/WEB-INF/Views/header.jsp" %>
 		
 		<div class="row">
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -38,7 +38,7 @@
 				</div>
 			</div>
 		</div>
-		<%@ include file="footer.jsp" %>
+		<%@ include file="/WEB-INF/Views/footer.jsp" %>
 	</div>
 </body>
 </html>

@@ -3,6 +3,8 @@ package com.accountomation.repairity.repository;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 
 import org.hibernate.Session;
@@ -33,12 +35,10 @@ public class IncidentRepositoryImpl implements IncidentRepository {
 	}
 
 	@Override
-	public void update(Incident incident) {
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
+	public Incident update(Incident incident) {
+		Session session = sessionFactory.getCurrentSession();
 		session.update(incident);
-		session.getTransaction().commit();
-		session.close();
+		return incident;
 	}
 
 	@Override
@@ -84,6 +84,27 @@ public class IncidentRepositoryImpl implements IncidentRepository {
 	public void log(IncidentLog incidentLog) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public List<Incident> list(String id) {
+		List<Incident> incidents = new ArrayList<>();
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			CriteriaQuery<Incident> criteria = session.getCriteriaBuilder().createQuery(Incident.class);
+			Root<Incident> root = criteria.from(Incident.class);
+			criteria
+				.select(root)
+				.where(session.getCriteriaBuilder().like(root.get("id"), "%" + id + "%"));
+			Query<Incident> query = session.createQuery(criteria);			
+			//Query<Incident> query = session.createQuery("From Incident I WHERE I.id like :incd%", Incident.class);
+			//query.setParameter("incd", id);
+			incidents = query.getResultList();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return incidents;
 	}
 
 }

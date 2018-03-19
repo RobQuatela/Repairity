@@ -9,7 +9,7 @@ public interface IncidentService {
 
 	public void saveIncident(Incident incident);
 	
-	public void updateIncident(Incident incident);
+	public Incident updateIncident(Incident incident);
 	
 	public void deleteIncident(Incident incident);
 	
@@ -18,4 +18,6 @@ public interface IncidentService {
 	public List<Incident> getIncidents();
 	
 	public void log(IncidentLog incidentLog);
+	
+	public List<Incident> getIncidents(String id);
 }
