@@ -27,6 +27,11 @@ public class IncidentController {
 		return "/IncidentViews/index";
 	}
 	
+	@RequestMapping(value = "/find", method = RequestMethod.GET)
+	public String vewIncident(Model model) {
+		return "/IncidentViews/findAccount";
+	}
+	
 	@RequestMapping("/new")
 	public String newIncident() {
 		return "/IncidentViews/newIncident";
@@ -71,8 +76,8 @@ public class IncidentController {
 	@ResponseBody
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Incident getIncident(@PathVariable("id") String invoiceNo) {
-		System.out.println("Request invoice no: " + invoiceNo);
 		Incident incident = incidentService.getIncident(invoiceNo);
+		System.out.println("Request invocie no: " + incident.getId());
 		return incident;
 	}
 }

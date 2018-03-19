@@ -45,15 +45,15 @@ public class HibernateConfig {
     	BasicDataSource dataSource = new BasicDataSource();
     	dataSource.setDriverClassName("com.mysql.jdbc.Driver");
     	dataSource.setUrl("jdbc:mysql://LocalHost:3306/repairity?useSSL=false");
-    	dataSource.setUsername("root");
-    	dataSource.setPassword("P@ssG0!");
+    	dataSource.setUsername("");
+    	dataSource.setPassword("");
     	
     	return dataSource;
     }
     
     private final Properties hibernateProperties() {
     	Properties hibernateProperties = new Properties();
-    	hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "create");
+    	hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "update");
     	hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
     	hibernateProperties.setProperty("hibernate.show_sql", "true");
     	

@@ -52,10 +52,10 @@ public class MvcConfig implements WebMvcConfigurer {
 		registry.addResourceHandler("/resources/images").addResourceLocations("/resources/");
 	}
 	
-	@Override
+/*	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/login").setViewName("login");
-	}
+	}*/
 	
 	
 }
