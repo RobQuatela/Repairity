@@ -147,6 +147,12 @@
 		})
 	}
 
+	function editIncident() {
+		var incdt = {};
+		incdt.id = $("#invoiceNo").val();
+		incdt.customer = $("#customerName").val();
+	}
+
 	function display(data) {
 		$('#invoiceNoResponse').html("Invoice No: " + data.id);
 		$('#status').html("Status: " + data.status);
@@ -166,13 +172,33 @@
 			col.className = "col-8";
 			var card = document.createElement("div");
 			card.className = "card";
+			
+			//information for card header
 			var cardHeader = document.createElement("div");
 			cardHeader.className = "card-header";
-			var cardBody = document.createElement("div");
-			cardBody.className = "card-body";
 			var invoice = document.createElement("div");
 			invoice.innerHTML = data[i].id;
+			var edit = document.createElement("button");
+			edit.className = "btn btn-primary";
+			edit.onClick = "editIncident()";
+			edit.innerHTML = "Edit";
+			var headerRow = document.createElement("div");
+			headerRow.className = "row";
+			var headerCol = document.createElement("div");
+			headerCol.className = "col-10";
+			var headerColBtn = document.createElement("div");
+			headerColBtn.className = "col-2";
+			headerCol.appendChild(invoice);
+			headerColBtn.appendChild(edit);
+			headerRow.appendChild(headerCol);
+			headerRow.appendChild(headerColBtn);
+			cardHeader.appendChild(headerRow);
+
+			//information for card body
+			var cardBody = document.createElement("div");
+			cardBody.className = "card-body";
 			var customer = document.createElement("div");
+			customer.id = "txtCustomer";
 			customer.innerHTML = data[i].customer;
 			var status = document.createElement("div");
 			status.innerHTML = data[i].status;
@@ -185,7 +211,8 @@
 			cardBody.appendChild(start);
 			cardBody.appendChild(status);
 			cardBody.appendChild(complaint);
-			cardHeader.appendChild(invoice);
+
+			
 			card.appendChild(cardHeader);
 			card.appendChild(cardBody);
 			col.appendChild(card);

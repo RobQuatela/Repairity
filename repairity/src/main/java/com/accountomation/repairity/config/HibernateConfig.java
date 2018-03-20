@@ -13,10 +13,6 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.accountomation.repairity.model.Company;
-import com.accountomation.repairity.model.Employee;
-import com.accountomation.repairity.model.Incident;
-
 @Configuration
 @EnableTransactionManagement
 public class HibernateConfig {
@@ -53,7 +49,7 @@ public class HibernateConfig {
     
     private final Properties hibernateProperties() {
     	Properties hibernateProperties = new Properties();
-    	hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "create");
+    	hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "update");
     	hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
     	hibernateProperties.setProperty("hibernate.show_sql", "true");
     	
