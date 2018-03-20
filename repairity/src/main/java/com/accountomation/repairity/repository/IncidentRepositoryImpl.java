@@ -27,8 +27,7 @@ public class IncidentRepositoryImpl implements IncidentRepository {
 	public void save(Incident incident) {
 		try {
 			Session session = sessionFactory.getCurrentSession();
-			//session.saveOrUpdate(incident);
-			session.save(incident);
+			session.saveOrUpdate(incident);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -97,8 +96,6 @@ public class IncidentRepositoryImpl implements IncidentRepository {
 				.select(root)
 				.where(session.getCriteriaBuilder().like(root.get("id"), "%" + id + "%"));
 			Query<Incident> query = session.createQuery(criteria);			
-			//Query<Incident> query = session.createQuery("From Incident I WHERE I.id like :incd%", Incident.class);
-			//query.setParameter("incd", id);
 			incidents = query.getResultList();
 		} catch(Exception e) {
 			e.printStackTrace();

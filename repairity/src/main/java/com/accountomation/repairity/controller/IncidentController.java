@@ -67,10 +67,11 @@ public class IncidentController {
 	}
 	
 	@GetMapping("/edit")
-	public String updateIncident(@RequestParam("invoiceNo") String invoice, Model model) {
-		Incident incident = incidentService.getIncident(invoice);
+	public String updateIncident(@RequestParam("id") String id, Model model) {
+		Incident incident = incidentService.getIncident(id);
 		model.addAttribute("incident", incident);
-		return "/IncidentViews/newIncident";
+		System.out.println("Incident no: " + incident.getId());
+		return "/IncidentViews/editIncident";
 	}
 	
 	@ResponseBody

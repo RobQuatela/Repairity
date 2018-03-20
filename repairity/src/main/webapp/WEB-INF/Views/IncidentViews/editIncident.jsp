@@ -2,6 +2,8 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix = "x" 
+   uri = "http://java.sun.com/jsp/jstl/xml" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -20,6 +22,7 @@
 		$("#btnExit").click(function() {
 			event.preventDefault();
 			$("body").fadeOut(300, newPage);
+			//window.location.href = "/repairity/incident/find";
 		});
 	});
 
@@ -35,9 +38,9 @@
 		incdt.customer = $("#txtCustomer").val();
 
 		$.ajax( {
-			type: "POST",
+			type: "PUT",
 			contentType: "application/json",
-			url: "http://localhost:8080/repairity/incidentREST/save",
+			url: "http://localhost:8080/repairity/incidentREST/update",
 			data: JSON.stringify(incdt),
 			dataType: 'json',
 			timeout: 100000,
@@ -46,12 +49,11 @@
 				$("#msgFail").hide();
 				$("body").fadeOut(600, newPage);
 			},
- 			error: function(xhr, status, error) {
+			error: function(e) {
 				$("#msgSuccess").hide();
-				console.log(xhr.responseText);
-				$("#msgFail").append(error);
+				$("#msgFail").append(e);
 				$("#msgFail").show();
-			} 
+			}
 		});
 	}
 </script>
@@ -75,44 +77,44 @@
 					No</span>
 			</div>
 			<input type="text" class="form-control" aria-label="Default"
-				aria-describedby="inputGroup-sizing-default" id="txtInvoice">
+				aria-describedby="inputGroup-sizing-default" id="txtInvoice" value="${incident.id }">
 		</div>
 		<div class="input-group mb-3">
 			<div class="input-group-prepend">
 				<span class="input-group-text" id="inputGroup-sizing-default">Start &nbsp;</span>
 			</div>
 			<input type="date" class="form-control" aria-label="Default"
-				aria-describedby="inputGroup-sizing-default" id="txtDate">
+				aria-describedby="inputGroup-sizing-default" id="txtDate" value="${incident.start }">
 		</div>
 		<div class="input-group mb-3">
 			<div class="input-group-prepend">
 				<span class="input-group-text" id="inputGroup-sizing-default">Status</span>
 			</div>
 			<input type="text" class="form-control" aria-label="Default"
-				aria-describedby="inputGroup-sizing-default" id="txtStatus">
+				aria-describedby="inputGroup-sizing-default" id="txtStatus" value="${incident.status }">
 		</div>
 		<div class="input-group mb-3">
 			<div class="input-group-prepend">
 				<span class="input-group-text" id="inputGroup-sizing-default">Customer</span>
 			</div>
 			<input type="text" class="form-control" aria-label="Default"
-				aria-describedby="inputGroup-sizing-default" id="txtCustomer">
+				aria-describedby="inputGroup-sizing-default" id="txtCustomer" value="${incident.customer }">
 		</div>
 		<div class="row">
 			<div class="col-12">
-			<button type="submit" id="btnAddIncident" class="btn btn-primary">Add Incident</button>
+			<button type="submit" id="btnAddIncident" class="btn btn-primary">Update Incident</button>
 			</div>
 		</div>
 		
 		<div class="row" id="msgSuccess">
 			<div class="col-8">
-				<p class="alert">Insert succeeded!!</p>
+				<p class="alert">Record has been Updated</p>
 			</div>
 		</div>
 		
 		<div class="row" id="msgFail">
 			<div class="col-8">
-				<p class="alert alert-danger">Insert did not succeed for reason: </p>
+				<p class="alert alert-danger">Record was not Updated</p>
 			</div>
 		</div>
 	</form>

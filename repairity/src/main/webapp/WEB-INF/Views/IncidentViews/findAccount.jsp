@@ -69,7 +69,7 @@
 				</div>
 			</div>
 		</div>
-		
+<!-- 		<div id="qbo">test</div> -->
 		<div id="resultList">
 		</div>
 
@@ -91,6 +91,26 @@
 			event.preventDefault();
 			searchViaAjax();
 		});  */
+
+/* 		$.ajax({
+			type: "GET",
+			contentType: "application/json",
+			url: "https://sandbox-quickbooks.api.intuit.com/v3/company/193514610014224/customer/2",
+			dataType: 'json',
+			headers: {
+					'Access-Control-Allow-Origin': 'http://localhost:8080'
+				},
+			beforeSend: function(xhr) {
+					xhr.setRequestHeader("Authorization", "Bearer eyJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwiYWxnIjoiZGlyIn0..AZ8r98PiFN6e-c2y28npug.9YV6Pw9ctpzq8TaUc25DiF_IE2_wCKSkpfeHREvyRwGaQDNTfnYFqiTWnnb792nCmAJDTXdxu8BCIp1vo2gEW8wJXEy-njZy4hgS21vfbpScnHY4YfGAnythevqUDJLdSxDWjlcJozRcYxzVdmBvXgmb1WUt4Pn8SL6V4WOpmbIq4f2zzgPLscJjbuVfCcHfieZfx0aXtiaP-dhgqGwHUBDkOXMT1QK-VDM8vVN-C9_1hAL7pPzX9MWIBqGRCsS-U3gs8XfLllXlbfKyly8WCbTMxGCJMRj-VYxllUsviHHdQEFmA6GkA5jRhZgkJdGRJ2793N1pQHEZ9mcRQbXFraGMpByC6U4XkqBJmEvnbuIN-j6paLEYJzrb1LC9TCD8R2GsOVvYRUzb0vQGP2cvGMhzbWRz-h_tEqwNV6QzA2-hLPzxhs5jntGtHbXTPuBcypGgCtZNHiymLkEArOf-5Qz5VC9mADTgEIMJyq2E0ZjiUJgSZBkK9ODl1AYKbS0SAAKqpB0N-xLJ_rVOkgb3XU1szLGls-yB6WtXJoNoCj0novabmUg_D_03Z3mHrC9CX2MPW_nd-KaQcpNH2pjLY95nLDKgUZmYdILGka5RpkdlleYrX_-UBebX5v6Cw9fhWC9RdGNzuj80eXmDkbhyzmkdvjbH4g0HSF4hQKPhlL3oy_zDFtknO72-BZAnZKh6dYRWGsG65kUgum4Xl28lVhodHrEePGyGNk_WPzNJsl8Zu_LYYolaZcPZaYkeCtDlHI1sMJcXHiA-eabbmqGS11rNZsRvIuDi4AMIjLDP_PmJEMdUEAef0LcCvZnZFeqH.rvdwceM-dAlf80DTB1lLIQ")
+				},
+			timeout: 100000,
+			success: function(data) {
+					$("#qbo").innerHTML = data.FamilyName;
+				},
+			error: function(e) {
+					
+				}
+		}); */
 
 		listViaAjax();
 
@@ -178,9 +198,10 @@
 			cardHeader.className = "card-header";
 			var invoice = document.createElement("div");
 			invoice.innerHTML = data[i].id;
+			invoice.id = "txtId";
 			var edit = document.createElement("button");
 			edit.className = "btn btn-primary";
-			edit.onClick = "editIncident()";
+			edit.id = "btnEdit" + data[i].id;
 			edit.innerHTML = "Edit";
 			var headerRow = document.createElement("div");
 			headerRow.className = "row";
@@ -202,10 +223,13 @@
 			customer.innerHTML = data[i].customer;
 			var status = document.createElement("div");
 			status.innerHTML = data[i].status;
+			status.id = "txtStatus";
 			var complaint = document.createElement("div");
 			complaint.innerHTML = data[i].complaint;
+			complaint.id = "txtComplaint";
 			var start = document.createElement("div");
 			start.innerHTML = new Date(data[i].start).toLocaleDateString('en-US');
+			start.id = "txtStart";
 			
 			cardBody.appendChild(customer);
 			cardBody.appendChild(start);
@@ -218,10 +242,16 @@
 			col.appendChild(card);
 			row.appendChild(col);
 			resultList.appendChild(row);
+
+			$("#btnEdit" + data[i].id).click({id: data[i].id}, editIncident);
 		}
 		
 		$('#divError').hide();
 		$('#searchResults').show();
+	}
+
+	function editIncident(event) {
+		window.location.href = "/repairity/incident/edit?id=" + event.data.id;
 	}
 </script>
 </body>
