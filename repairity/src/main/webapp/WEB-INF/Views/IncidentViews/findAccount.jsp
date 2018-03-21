@@ -70,7 +70,20 @@
 			</div>
 		</div>
 <!-- 		<div id="qbo">test</div> -->
-		<div id="resultList">
+		<div class="row">
+			<div class="col-8">
+				<div id="resultList">
+				</div>
+			</div>
+			<div class="col-4">
+				<div class="card">
+					<div class="card-header">Incident Detail</div>
+					<div class="card-body">
+						<div id="detailId"></div>
+						<input type="text" id="detailCustomer" />
+					</div>
+				</div>
+			</div>
 		</div>
 
 		<div class="row" id="divError">
@@ -196,6 +209,7 @@
 			//information for card header
 			var cardHeader = document.createElement("div");
 			cardHeader.className = "card-header";
+			cardHeader.id = "incidentHeader" + data[i].id;
 			var invoice = document.createElement("div");
 			invoice.innerHTML = data[i].id;
 			invoice.id = "txtId";
@@ -243,7 +257,18 @@
 			row.appendChild(col);
 			resultList.appendChild(row);
 
+			//function to pass value through controller to edit page
 			$("#btnEdit" + data[i].id).click({id: data[i].id}, editIncident);
+			//function to change color of card header when mouse hovers
+ 			$("#incidentHeader" + data[i].id).hover(function() {
+				$(this).css("background-color", "yellow");
+				}, function() {
+				$(this).css("background-color", "white");
+			}); 
+			//function to populate data to right side when card header is clicked
+			$("#incidentHeader" + data[i].id).click(function(event) {
+				
+			});
 		}
 		
 		$('#divError').hide();

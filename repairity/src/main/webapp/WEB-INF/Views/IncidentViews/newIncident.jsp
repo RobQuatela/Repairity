@@ -17,7 +17,7 @@
 			submitAJAX();
 		});
 
-		$("#btnExit").click(function() {
+		$("#btnExit").click(function(event) {
 			event.preventDefault();
 			$("body").fadeOut(300, newPage);
 		});
