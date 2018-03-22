@@ -7,7 +7,7 @@ import com.accountomation.repairity.model.Employee;
 
 public interface EmployeeRepository {
 
-	public void save(Employee emp);
+	public Employee save(Employee emp);
 	
 	public void update(Employee emp);
 	
@@ -16,4 +16,8 @@ public interface EmployeeRepository {
 	public Employee get(String id);
 	
 	public List<Employee> getEmployees(Company company);
+	
+	public List<Employee> getEmployees();
+	
+	public List<Employee> searchEmployees(String name);
 }

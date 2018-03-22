@@ -3,11 +3,13 @@ package com.accountomation.repairity.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.accountomation.repairity.model.Company;
 import com.accountomation.repairity.model.Employee;
 import com.accountomation.repairity.repository.EmployeeRepository;
 
+@Service("employeeService")
 public class EmployeeServiceImpl implements EmployeeService {
 
 	private EmployeeRepository employeeRepository;
@@ -18,8 +20,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public void saveEmployee(Employee emp) {
-		employeeRepository.save(emp);
+	public Employee saveEmployee(Employee emp) {
+		return employeeRepository.save(emp);
 	}
 
 	@Override
@@ -40,6 +42,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public List<Employee> getEmployees(Company company) {
 		return employeeRepository.getEmployees(company);
+	}
+
+	@Override
+	public List<Employee> getEmployees() {
+		return employeeRepository.getEmployees();
+	}
+
+	@Override
+	public List<Employee> searchEmployees(String name) {
+		return employeeRepository.searchEmployees(name);
 	}
 
 }

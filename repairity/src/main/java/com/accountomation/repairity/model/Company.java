@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "company")
 public class Company {
@@ -47,6 +49,7 @@ public class Company {
 		this.name = name;
 	}
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
 	public List<Employee> getEmployees() {
 		return employees;

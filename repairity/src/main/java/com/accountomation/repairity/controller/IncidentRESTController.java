@@ -23,19 +23,6 @@ public class IncidentRESTController {
 	@Autowired
 	IncidentService incidentService;
 	
-/*	@RequestMapping(//value = "/{id}", 
-			method = RequestMethod.POST)
-	public ResponseEntity<Incident> getIncident(String invoiceNo) {
-		Incident incident = incidentService.getIncident(invoiceNo);
-		System.out.println("Request invocie no: " + invoiceNo);
-		
-		if(incident == null) {
-			return new ResponseEntity(HttpStatus.NOT_FOUND);
-		}
-		
-		return new ResponseEntity<Incident>(incident, HttpStatus.OK);
-	}*/
-	
 	@GetMapping(value = "/search")
 	public ResponseEntity<Incident> getIncident(@RequestParam("id") String id) {
 		Incident incident = incidentService.getIncident(id);
@@ -79,7 +66,7 @@ public class IncidentRESTController {
 	
 	@GetMapping(value = "/list")
 	public ResponseEntity<List<Incident>> listIncidents(@RequestParam("id") String id) {
-		
+
 		List<Incident> incidents;
 		
 		if(!id.equals("")) {

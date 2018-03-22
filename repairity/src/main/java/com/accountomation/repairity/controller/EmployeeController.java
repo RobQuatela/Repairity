@@ -9,7 +9,7 @@ public class EmployeeController {
 	
 	@RequestMapping(value = "/")
 	public String showHomePage() {
-		return "/EmployeeViews/index";
+		return "/EmployeeViews/indexEmployee";
 	}
 
 }

@@ -11,11 +11,13 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.accountomation.repairity.model.Company;
 import com.accountomation.repairity.model.Employee;
 
 @Repository("companyRepository")
+@Transactional
 public class CompanyRepositoryImpl implements CompanyRepository {
 
 	//@Autowired
@@ -37,7 +39,7 @@ public class CompanyRepositoryImpl implements CompanyRepository {
 
 	@Override
 	public Company getCompany(String id) {
-		Session session = sessionFactory.openSession();
+		Session session = sessionFactory.getCurrentSession();
 		return session.load(Company.class, id);
 	}
 
@@ -67,11 +69,9 @@ public class CompanyRepositoryImpl implements CompanyRepository {
 
 	@Override
 	public void addEmployee(Company company, Employee employee) {
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
+		Session session = sessionFactory.getCurrentSession();
 		Company companyA = session.load(Company.class, company.getId());
 		companyA.addEmployee(employee);
-		session.getTransaction().commit();
 		session.close();
 	}
 
