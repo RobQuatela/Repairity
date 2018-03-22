@@ -65,7 +65,7 @@ public class IncidentRESTController {
 		Incident updatedIncident = new Incident();
 		
 		try {
-			System.out.println(incdt.getId() + " " + incdt.getCustomer());
+			System.out.println(incdt.getId() + " " + incdt.getStart());
 			updatedIncident = incidentService.updateIncident(incdt);
 		} catch(Exception e) {
 			e.printStackTrace();

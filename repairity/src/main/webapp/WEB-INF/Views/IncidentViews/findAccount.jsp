@@ -273,8 +273,8 @@
 			var incdt = {};
 			incdt.id = document.getElementById("editId").innerHTML;
 			incdt.customer = $("#editCustomer").val();
-			//incdt.start = $("#editStart").val();
-			//incdt.stop = $("#editStop").val();
+			incdt.start = $("#editStart").val();
+			incdt.stop = $("#editStop").val();
 			incdt.complaint = $("#editComplaint").val();
 			incdt.status = $("#editStatus").val();
 			incdt.address = $("#editAddress").val();
@@ -283,7 +283,7 @@
 			incdt.zip = $("#editZip").val();
 			incdt.phone = $("#editPhone").val();
 			incdt.amount = $("#editAmount").val();
-
+			console.log(incdt.start);
 			$.ajax({
 				type: "PUT",
 				contentType: "application/json",
@@ -421,8 +421,8 @@
 					console.log("success on showIncident function " + data.id);
 					document.getElementById("editId").innerHTML = data.id;
 					document.getElementById("editCustomer").value = data.customer;
-					document.getElementById("editStart").value = data.start;
-					document.getElementById("editStop").value = data.stop;
+					document.getElementById("editStart").valueAsDate = new Date(data.start);
+					document.getElementById("editStop").valueAsDate = new Date(data.stop);
 					document.getElementById("editComplaint").value = data.complaint;
 					document.getElementById("editStatus").value = data.status;
 					document.getElementById("editAddress").value = data.address;

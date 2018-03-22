@@ -49,7 +49,7 @@
  			error: function(xhr, status, error) {
 				$("#msgSuccess").hide();
 				console.log(xhr.responseText);
-				$("#msgFail").append(error);
+				$("#pFail").append(error);
 				$("#msgFail").show();
 			} 
 		});
@@ -58,16 +58,21 @@
 </head>
 <body id="body">
 	<%@ include file="/WEB-INF/Views/header.jsp"%>
+	<br />
 	<div class="row">
 	<div class="col-10">
-	<div class="jumbotron jumbotron-fluid">
-		<h2 class="display-1">Create new incident</h2>
-	</div>
+		<div class="container">
+			<h2 class="display-2">Create Incident</h2>
+		</div>
 	</div>
 	<div class="col-2">
-		<button class="btn btn-primary" id="btnExit">Cancel</button>
+		<div class="container">
+			<button class="btn btn-primary" id="btnExit">Cancel</button>
+		</div>
 	</div>
 	</div>
+	<div class="row">
+	<div class="col-12">
 	<form name="incidentForm" id="incidentForm">
 		<div class="input-group mb-3">
 			<div class="input-group-prepend">
@@ -98,6 +103,8 @@
 			<input type="text" class="form-control" aria-label="Default"
 				aria-describedby="inputGroup-sizing-default" id="txtCustomer">
 		</div>
+		</div>
+		</div>
 		<div class="row">
 			<div class="col-12">
 			<button type="submit" id="btnAddIncident" class="btn btn-primary">Add Incident</button>
@@ -112,7 +119,7 @@
 		
 		<div class="row" id="msgFail">
 			<div class="col-8">
-				<p class="alert alert-danger">Insert did not succeed for reason: </p>
+				<p class="alert alert-danger" id="pFail">Insert did not succeed for reason: </p>
 			</div>
 		</div>
 	</form>

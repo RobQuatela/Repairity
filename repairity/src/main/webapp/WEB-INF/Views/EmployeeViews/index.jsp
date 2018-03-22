@@ -11,8 +11,8 @@
 <body>
 <div class="container container-fluid">
 <%@ include file="/WEB-INF/Views/header.jsp" %>
-	<div class="jumbotron jumbotron-fluid">
-		<h1 class="display-4">Employees</h1>
+	<div class="container">
+	<h1 class="display-2">Employees</h1>
 	</div>
 <%@ include file="/WEB-INF/Views/footer.jsp" %>
 </div>
