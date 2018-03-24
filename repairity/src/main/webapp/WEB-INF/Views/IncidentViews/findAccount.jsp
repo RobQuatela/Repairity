@@ -96,71 +96,76 @@
 				<!-- 	<div class="card">
 					<div class="card-header">Incident Detail</div>
 					<div class="card-body"> -->
-				<div class="input-group mb-2">
+				<br />
+				<div class="row">
+				<div class="col-12">
+				<div class="mb-2">
 					<div class="input-group-prepend">
 						<span class="input-group-text">Customer:</span> <input type="text"
 							id="editCustomer" class="form-control" />
 					</div>
 				</div>
-				<div class="input-group mb-2">
+				<div class="mb-2">
 					<div class="input-group-prepend">
 						<span class="input-group-text">Start:</span> <input type="date"
 							id="editStart" class="form-control" />
 					</div>
 				</div>
-				<div class="input-group mb-2">
+				<div class="mb-2">
 					<div class="input-group-prepend">
 						<span class="input-group-text">End:</span> <input type="date"
 							id="editStop" class="form-control" />
 					</div>
 				</div>
-				<div class="input-group mb-2">
+				<div class="mb-2">
 					<div class="input-group-prepend">
 						<span class="input-group-text">Complaint:</span>
 						<textarea id="editComplaint" class="form-control"></textarea>
 					</div>
 				</div>
-				<div class="input-group mb-2">
+				<div class="mb-2">
 					<div class="input-group-prepend">
 						<span class="input-group-text">Status:</span> <input type="text"
 							id="editStatus" class="form-control" />
 					</div>
 				</div>
-				<div class="input-group mb-2">
+				<div class="mb-2">
 					<div class="input-group-prepend">
 						<span class="input-group-text">Address:</span> <input type="text"
 							id="editAddress" class="form-control" />
 					</div>
 				</div>
-				<div class="input-group mb-2">
+				<div class="mb-2">
 					<div class="input-group-prepend">
 						<span class="input-group-text">City:</span> <input type="text"
 							id="editCity" class="form-control" />
 					</div>
 				</div>
-				<div class="input-group mb-2">
+				<div class="mb-2">
 					<div class="input-group-prepend">
 						<span class="input-group-text">State:</span> <input type="text"
 							id="editState" class="form-control" />
 					</div>
 				</div>
-				<div class="input-group mb-2">
+				<div class="mb-2">
 					<div class="input-group-prepend">
 						<span class="input-group-text">Zip Code:</span> <input type="text"
 							id="editZip" class="form-control" />
 					</div>
 				</div>
-				<div class="input-group mb-2">
+				<div class="mb-2">
 					<div class="input-group-prepend">
 						<span class="input-group-text">Phone Number:</span> <input
 							type="text" id="editPhone" class="form-control" />
 					</div>
 				</div>
-				<div class="input-group mb-2">
+				<div class="mb-2">
 					<div class="input-group-prepend">
 						<span class="input-group-text">$:</span> <input type="text"
 							id="editAmount" class="form-control" />
 					</div>
+				</div>
+				</div>
 				</div>
 			</div>
 		</div>

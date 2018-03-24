@@ -207,7 +207,7 @@
 								</div>
 							</div>
 							<button class="btn btn-primary" id="btnAddEmployee">Create Employee</button>
-							<button class="btn btn-primary" id="btnCancel">Cancel</button>
+							<button type="reset" class="btn btn-primary" id="btnCancel">Cancel</button>
 						</div>
 					</form>
 				</div>
