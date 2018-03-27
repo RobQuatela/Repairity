@@ -37,13 +37,15 @@ public class IncidentRESTController {
 	
 	@PostMapping(value = "/save")
 	public ResponseEntity<Incident> saveIncident(@RequestBody Incident incdt) {
+		Incident incident = new Incident();
 		try {
-			incidentService.saveIncident(incdt);
-			return new ResponseEntity<Incident>(HttpStatus.OK);
+			incident = incidentService.saveIncident(incdt);
 		} catch(Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<Incident>(HttpStatus.BAD_REQUEST);
 		}
+		
+		return new ResponseEntity<Incident>(incident, HttpStatus.OK);
 	}
 	
 	@PutMapping(value = "/update")

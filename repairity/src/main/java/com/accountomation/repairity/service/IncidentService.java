@@ -7,7 +7,7 @@ import com.accountomation.repairity.model.IncidentLog;
 
 public interface IncidentService {
 
-	public void saveIncident(Incident incident);
+	public Incident saveIncident(Incident incident);
 	
 	public Incident updateIncident(Incident incident);
 	

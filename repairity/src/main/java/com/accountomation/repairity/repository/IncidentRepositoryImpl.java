@@ -24,13 +24,15 @@ public class IncidentRepositoryImpl implements IncidentRepository {
 	private SessionFactory sessionFactory;
 
 	@Override
-	public void save(Incident incident) {
+	public Incident save(Incident incident) {
 		try {
 			Session session = sessionFactory.getCurrentSession();
 			session.saveOrUpdate(incident);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		return incident;
 	}
 
 	@Override

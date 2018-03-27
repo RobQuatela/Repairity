@@ -5,11 +5,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Repairity - Employees</title>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
 	$(document).ready(function() {
-		$("#msgSuccessInsert").hide();
+		$("#msgSuccess").hide();
 		$("#msgError").hide();
 		$("#newEmployeeCard").hide();
 
@@ -22,7 +22,7 @@
 			$("#newEmployeeCard").hide();
 			$("#btnNewEmployee").show();
 		});
-		
+
 		list();
 
 		$("#frmNewEmployee").submit(function(event) {
@@ -34,7 +34,7 @@
 			event.preventDefault();
 			updateEmployee();
 		});
-		
+
 	});
 
 	function searchEmployee() {
@@ -43,26 +43,57 @@
 		employee.name = search;
 
 		$.ajax({
-			type: "GET",
-			contentType: "application/json",
-			url: "http://localhost:8080/repairity/employeeREST/search",
-			data: employee,
-			dataType: "json",
-			success: function(data) {
-					listEmployees(data);
-				},
-			error: function(error, xhr) {
-					$("#msgError").append(error);
-					$("#msgError").show();
-					$("#msgError").fadeOut(2000);
-				}
+			type : "GET",
+			contentType : "application/json",
+			url : "http://localhost:8080/repairity/employeeREST/search",
+			data : employee,
+			dataType : "json",
+			success : function(data) {
+				listEmployees(data);
+			},
+			error : function(error, xhr) {
+				$("#msgError").append(error);
+				$("#msgError").show();
+				$("#msgError").fadeOut(2000);
+			}
 		});
+	}
+
+	function updateEmployee() {
+		var employee = {};
+		employee.id = $("#updateId").val();
+		employee.name = $("#updateName").val();
+		var company = {};
+		company.id = $("#updateCompany").val();
+		employee.company = company;
+
+		$
+				.ajax({
+					type : "PUT",
+					contentType : "application/json",
+					url : "http://localhost:8080/repairity/employeeREST/update",
+					data : JSON.stringify(employee),
+					datatype : 'json',
+					timeout : 100000,
+					success : function(data) {
+						list();
+						document.getElementById("msgSuccess").innerHTML = employee.name + " Successfully Updated!";
+						$("#msgSuccess").show();
+						$("#msgSuccess").fadeOut(2000);
+					},
+					error : function(error) {
+						document.getElementById("msgError").innerHTML = employee.name + " was not updated: "
+								+ error;
+						$("#msgError").show();
+						$("#msgError").fadeOut(5000);
+					}
+				});
 	}
 
 	function createEmployee() {
 		var company = {};
 		company.id = $("#newCompany").val();
-		
+
 		var employee = {};
 		employee.id = $("#newId").val();
 		employee.name = $("#newName").val();
@@ -70,20 +101,21 @@
 		console.log(employee.company);
 
 		$.ajax({
-			type: "POST",
-			contentType: "application/json",
-			url: "http://localhost:8080/repairity/employeeREST/new",
-			data: JSON.stringify(employee),
-			dataType: 'json',
-			timeout: 100000,
-			success: function(data) {
+			type : "POST",
+			contentType : "application/json",
+			url : "http://localhost:8080/repairity/employeeREST/new",
+			data : JSON.stringify(employee),
+			dataType : 'json',
+			timeout : 100000,
+			success : function(data) {
 				list();
 				$("#newEmployeeCard").hide();
 				$("#btnNewEmployee").show();
-				$("#msgSuccessInsert").show();
-				$("#msgSuccessInsert").fadeOut(2000);
+				document.getElementById("msgSuccess").innerHTML = "Employee Successfully Created!";
+				$("#msgSuccess").show();
+				$("#msgSuccess").fadeOut(2000);
 			},
-			error: function(error) {
+			error : function(error) {
 				$("#msgError").append(error);
 				$("#msgError").show();
 				$("#msgError").fadeOut(5000);
@@ -93,15 +125,15 @@
 
 	function list() {
 		$.ajax({
-			type: "GET",
-			contentType: "application/json",
-			url: "http://localhost:8080/repairity/employeeREST/list",
-			dataType: 'json',
-			timeout: 100000,
-			success: function(data) {
+			type : "GET",
+			contentType : "application/json",
+			url : "http://localhost:8080/repairity/employeeREST/list",
+			dataType : 'json',
+			timeout : 100000,
+			success : function(data) {
 				listEmployees(data);
 			},
-			error: function(error) {
+			error : function(error) {
 				console.log(error);
 			}
 		});
@@ -111,11 +143,11 @@
 		var tableBody = document.getElementById("empTable");
 		tableBody.innerHTML = "";
 
-		for(var i = 0; i < data.length; i++) {
+		for (var i = 0; i < data.length; i++) {
 			var tableRow = document.createElement("tr");
 			tableRow.id = "tableRow" + data[i].id;
 			var tableRowHeader = document.createElement("th");
-			
+
 			tableRowHeader.scope = "row";
 			tableRowHeader.innerHTML = data[i].id;
 
@@ -137,7 +169,9 @@
 			});
 
 			$("#tableRow" + data[i].id).click({
-				id: data[i].id, name: data[i].name
+				id : data[i].id,
+				name : data[i].name,
+				company : data[i].company.id
 			}, showEmployee);
 		}
 	}
@@ -145,6 +179,7 @@
 	function showEmployee(event) {
 		document.getElementById("updateId").value = event.data.id;
 		document.getElementById("updateName").value = event.data.name;
+		document.getElementById("updateCopany").value = event.data.company;
 	}
 </script>
 </head>
@@ -173,8 +208,20 @@
 										type="text" id="updateName" class="form-control" />
 								</div>
 							</div>
-							<button class="btn btn-primary" id="btnUpdateEmployee">Save Employee</button>
-							<button class="btn btn-primary" id="btnNewEmployee">New Employee</button>
+							<div class="mb-2">
+								<div class="input-group-prepend">
+									<label class="input-group-text" for="updateCompany">Company:</label>
+									<select class="customer-select" id="updateCompany">
+										<option value="SSB">Atlanta</option>
+										<option value="HOU">Houston</option>
+										<option value="NJC">Toms River</option>
+									</select>
+								</div>
+							</div>
+							<button class="btn btn-primary" id="btnUpdateEmployee">Save
+								Employee</button>
+							<button class="btn btn-primary" id="btnNewEmployee" type="button">New
+								Employee</button>
 						</div>
 					</form>
 				</div>
@@ -206,7 +253,8 @@
 									</select>
 								</div>
 							</div>
-							<button class="btn btn-primary" id="btnAddEmployee">Create Employee</button>
+							<button class="btn btn-primary" id="btnAddEmployee">Create
+								Employee</button>
 							<button type="reset" class="btn btn-primary" id="btnCancel">Cancel</button>
 						</div>
 					</form>
@@ -214,14 +262,15 @@
 			</div>
 		</div>
 		<br />
-		<div class="alert alert-success" id="msgSuccessInsert">Employee has been successfully created!</div>
-		<div class="alert alert-danger" id="msgError">Error has occurred: </div>
+		<div class="alert alert-success" id="msgSuccess"></div>
+		<div class="alert alert-danger" id="msgError"></div>
 		<div class="row">
 			<div class="col-6">
 				<div class="mb-2">
 					<div class="input-group-prepend">
-						<span class="input-group-text">Name:</span> <input
-							type="text" id="txtSearch" placeholder="Search for Employee Name" onkeyup="searchEmployee()" class="form-control" />
+						<span class="input-group-text">Name:</span> <input type="text"
+							id="txtSearch" placeholder="Search for Employee Name"
+							onkeyup="searchEmployee()" class="form-control" />
 					</div>
 				</div>
 			</div>

@@ -74,7 +74,8 @@
 			</div>
 		</div>
 		<!-- 		<div id="qbo">test</div> -->
-		<div class="row alert alert-success" id="successUpdate" role="alert">Incident Saved!</div>
+		<div class="row alert alert-success" id="successUpdate" role="alert">Incident
+			Saved!</div>
 		<div class="row">
 			<div class="col-4" style="overflow-y: auto; height: 600px;">
 				<div id="resultList"></div>
@@ -87,8 +88,7 @@
 						</div>
 						<div class="col-2">
 							<form id="updateIncident">
-							<button class="btn btn-primary">Update
-								Incident</button>
+								<button class="btn btn-primary">Update Incident</button>
 							</form>
 						</div>
 					</div>
@@ -98,76 +98,83 @@
 					<div class="card-body"> -->
 				<br />
 				<div class="row">
-				<div class="col-12">
-				<div class="mb-2">
-					<div class="input-group-prepend">
-						<span class="input-group-text">Customer:</span> <input type="text"
-							id="editCustomer" class="form-control" />
+					<div class="col-6">
+						<div class="mb-2">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Customer:</span> <input
+									type="text" id="editCustomer" class="form-control" />
+							</div>
+						</div>
+						<div class="mb-2">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Start:</span> <input type="date"
+									id="editStart" class="form-control" />
+							</div>
+						</div>
+						<div class="mb-2">
+							<div class="input-group-prepend">
+								<span class="input-group-text">End:</span> <input type="date"
+									id="editStop" class="form-control" />
+							</div>
+						</div>
+						<div class="mb-2">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Complaint:</span>
+								<textarea id="editComplaint" class="form-control"></textarea>
+							</div>
+						</div>
+						<div class="mb-2">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Status:</span> <input type="text"
+									id="editStatus" class="form-control" />
+							</div>
+						</div>
+						<div class="mb-2">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Address:</span> <input
+									type="text" id="editAddress" class="form-control" />
+							</div>
+						</div>
 					</div>
-				</div>
-				<div class="mb-2">
-					<div class="input-group-prepend">
-						<span class="input-group-text">Start:</span> <input type="date"
-							id="editStart" class="form-control" />
+					<div class="col-6">
+						<div class="mb-2">
+							<div class="input-group-prepend">
+								<span class="input-group-text">City:</span> <input type="text"
+									id="editCity" class="form-control" />
+							</div>
+						</div>
+						<div class="mb-2">
+							<div class="input-group-prepend">
+								<span class="input-group-text">State:</span> <input type="text"
+									id="editState" class="form-control" />
+							</div>
+						</div>
+						<div class="mb-2">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Zip Code:</span> <input
+									type="text" id="editZip" class="form-control" />
+							</div>
+						</div>
+						<div class="mb-2">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Phone Number:</span> <input
+									type="text" id="editPhone" class="form-control" />
+							</div>
+						</div>
+						<div class="mb-2">
+							<div class="input-group-prepend">
+								<span class="input-group-text">$:</span> <input type="text"
+									id="editAmount" class="form-control" />
+							</div>
+						</div>
 					</div>
-				</div>
-				<div class="mb-2">
-					<div class="input-group-prepend">
-						<span class="input-group-text">End:</span> <input type="date"
-							id="editStop" class="form-control" />
-					</div>
-				</div>
-				<div class="mb-2">
-					<div class="input-group-prepend">
-						<span class="input-group-text">Complaint:</span>
-						<textarea id="editComplaint" class="form-control"></textarea>
-					</div>
-				</div>
-				<div class="mb-2">
-					<div class="input-group-prepend">
-						<span class="input-group-text">Status:</span> <input type="text"
-							id="editStatus" class="form-control" />
-					</div>
-				</div>
-				<div class="mb-2">
-					<div class="input-group-prepend">
-						<span class="input-group-text">Address:</span> <input type="text"
-							id="editAddress" class="form-control" />
-					</div>
-				</div>
-				<div class="mb-2">
-					<div class="input-group-prepend">
-						<span class="input-group-text">City:</span> <input type="text"
-							id="editCity" class="form-control" />
-					</div>
-				</div>
-				<div class="mb-2">
-					<div class="input-group-prepend">
-						<span class="input-group-text">State:</span> <input type="text"
-							id="editState" class="form-control" />
-					</div>
-				</div>
-				<div class="mb-2">
-					<div class="input-group-prepend">
-						<span class="input-group-text">Zip Code:</span> <input type="text"
-							id="editZip" class="form-control" />
-					</div>
-				</div>
-				<div class="mb-2">
-					<div class="input-group-prepend">
-						<span class="input-group-text">Phone Number:</span> <input
-							type="text" id="editPhone" class="form-control" />
-					</div>
-				</div>
-				<div class="mb-2">
-					<div class="input-group-prepend">
-						<span class="input-group-text">$:</span> <input type="text"
-							id="editAmount" class="form-control" />
-					</div>
-				</div>
-				</div>
 				</div>
 			</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<div class="display-4">Employees Assigned</div>
+				
 		</div>
 	</div>
 	<!-- 		</div>
@@ -193,12 +200,12 @@
 				event.preventDefault();
 				updateIncident();
 			});
-	
+
 			/*  		$("#incidentForm").submit(function(event) {
 						event.preventDefault();
 						searchViaAjax();
 					});  */
-	
+
 			/* 		$.ajax({
 						type: "GET",
 						contentType: "application/json",
@@ -218,15 +225,15 @@
 								
 							}
 					}); */
-	
+
 			listViaAjax();
-	
+
 		});
-	
+
 		function enableSearchButton(flag) {
 			$("#btn-search").prop("disabled", flag);
 		}
-	
+
 		function searchViaAjax() {
 			console.log("search AJAX method");
 			var incdt = {}
@@ -252,7 +259,7 @@
 				}
 			});
 		}
-	
+
 		function listViaAjax() {
 			var incdt = {};
 			incdt.id = $("#invoiceNo").val();
@@ -290,32 +297,32 @@
 			incdt.amount = $("#editAmount").val();
 			console.log(incdt.start);
 			$.ajax({
-				type: "PUT",
-				contentType: "application/json",
-				url: "http://localhost:8080/repairity/incidentREST/update",
-				data: JSON.stringify(incdt),
-				dataType: 'json',
-				timeout: 100000,
-				success: function() {
-						console.log("incident saved...");
-						$("#successUpdate").innerHTML = "Incident Saved";
-						$("#successUpdate").show();
-						$("#successUpdate").fadeOut(2000);
-					},
-				error: function(e) {
-						console.log("incident not saved...");
-					}
+				type : "PUT",
+				contentType : "application/json",
+				url : "http://localhost:8080/repairity/incidentREST/update",
+				data : JSON.stringify(incdt),
+				dataType : 'json',
+				timeout : 100000,
+				success : function() {
+					console.log("incident saved...");
+					$("#successUpdate").innerHTML = "Incident Saved";
+					$("#successUpdate").show();
+					$("#successUpdate").fadeOut(2000);
+				},
+				error : function(e) {
+					console.log("incident not saved...");
+				}
 			});
 
 			listViaAjax();
 		}
-	
+
 		function editIncident() {
 			var incdt = {};
 			incdt.id = $("#invoiceNo").val();
 			incdt.customer = $("#customerName").val();
 		}
-	
+
 		function display(data) {
 			$('#invoiceNoResponse').html("Invoice Detail For: " + data.id);
 			$('#status').html("Status: " + data.status);
@@ -324,7 +331,7 @@
 			$('#divError').hide();
 			$('#divResults').show();
 		}
-	
+
 		function displayList(data) {
 			var resultList = document.getElementById("resultList");
 			resultList.innerHTML = "";
@@ -336,7 +343,7 @@
 				col.className = "col-12";
 				var card = document.createElement("div");
 				card.className = "card";
-	
+
 				//information for card header
 				var cardHeader = document.createElement("div");
 				cardHeader.className = "card-header";
@@ -359,7 +366,7 @@
 				headerRow.appendChild(headerCol);
 				headerRow.appendChild(headerColBtn);
 				cardHeader.appendChild(headerRow);
-	
+
 				//information for card body
 				var cardBody = document.createElement("div");
 				cardBody.className = "card-body";
@@ -373,21 +380,21 @@
 				complaint.innerHTML = data[i].complaint;
 				complaint.id = "txtComplaint";
 				var start = document.createElement("div");
-				start.innerHTML = new Date(data[i].start).toLocaleDateString('en-US');
+				start.innerHTML = new Date(data[i].start)
+						.toLocaleDateString('en-US');
 				start.id = "txtStart";
-	
+
 				cardBody.appendChild(customer);
 				cardBody.appendChild(start);
 				cardBody.appendChild(status);
 				cardBody.appendChild(complaint);
-	
-	
+
 				card.appendChild(cardHeader);
 				card.appendChild(cardBody);
 				col.appendChild(card);
 				row.appendChild(col);
 				resultList.appendChild(row);
-	
+
 				//function to pass value through controller to edit page
 				$("#btnEdit" + data[i].id).click({
 					id : data[i].id
@@ -403,45 +410,50 @@
 					id : data[i].id
 				}, showIncident);
 			}
-	
+
 			$('#divError').hide();
 			$('#searchResults').show();
 		}
-	
+
 		function editIncident(event) {
-			window.location.href = "/repairity/incident/edit?id=" + event.data.id;
+			window.location.href = "/repairity/incident/edit?id="
+					+ event.data.id;
 		}
-	
+
 		function showIncident(event) {
 			var incident = {};
 			incident.id = event.data.id;
-	
-			$.ajax({
-				type : "GET",
-				contentType : "application/json",
-				url : "http://localhost:8080/repairity/incidentREST/search",
-				data : incident,
-				dataType : 'json',
-				success : function(data) {
-					console.log("success on showIncident function " + data.id);
-					document.getElementById("editId").innerHTML = data.id;
-					document.getElementById("editCustomer").value = data.customer;
-					document.getElementById("editStart").valueAsDate = new Date(data.start);
-					document.getElementById("editStop").valueAsDate = new Date(data.stop);
-					document.getElementById("editComplaint").value = data.complaint;
-					document.getElementById("editStatus").value = data.status;
-					document.getElementById("editAddress").value = data.address;
-					document.getElementById("editCity").value = data.city;
-					document.getElementById("editState").value = data.state;
-					document.getElementById("editZip").value = data.zip;
-					document.getElementById("editPhone").value = data.phone;
-					document.getElementById("editAmount").value = data.amount;
-				},
-				error : function(e) {
-					console.log("error on showIncident function");
-					$("#editId").innerHTML = "Didn't work...";
-				}
-			});
+
+			$
+					.ajax({
+						type : "GET",
+						contentType : "application/json",
+						url : "http://localhost:8080/repairity/incidentREST/search",
+						data : incident,
+						dataType : 'json',
+						success : function(data) {
+							console.log("success on showIncident function "
+									+ data.id);
+							document.getElementById("editId").innerHTML = data.id;
+							document.getElementById("editCustomer").value = data.customer;
+							document.getElementById("editStart").valueAsDate = new Date(
+									data.start);
+							document.getElementById("editStop").valueAsDate = new Date(
+									data.stop);
+							document.getElementById("editComplaint").value = data.complaint;
+							document.getElementById("editStatus").value = data.status;
+							document.getElementById("editAddress").value = data.address;
+							document.getElementById("editCity").value = data.city;
+							document.getElementById("editState").value = data.state;
+							document.getElementById("editZip").value = data.zip;
+							document.getElementById("editPhone").value = data.phone;
+							document.getElementById("editAmount").value = data.amount;
+						},
+						error : function(e) {
+							console.log("error on showIncident function");
+							$("#editId").innerHTML = "Didn't work...";
+						}
+					});
 		}
 	</script>
 </body>

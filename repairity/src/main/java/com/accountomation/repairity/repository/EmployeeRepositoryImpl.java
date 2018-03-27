@@ -31,12 +31,11 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 	}
 
 	@Override
-	public void update(Employee emp) {
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
+	public Employee update(Employee emp) {
+		Session session = sessionFactory.getCurrentSession();
 		session.update(emp);
-		session.getTransaction().commit();
-		session.close();
+		
+		return emp;
 	}
 
 	@Override

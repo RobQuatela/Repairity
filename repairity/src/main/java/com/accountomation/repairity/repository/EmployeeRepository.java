@@ -9,7 +9,7 @@ public interface EmployeeRepository {
 
 	public Employee save(Employee emp);
 	
-	public void update(Employee emp);
+	public Employee update(Employee emp);
 	
 	public void delete(Employee emp);
 	

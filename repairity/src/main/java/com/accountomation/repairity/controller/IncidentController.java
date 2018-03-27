@@ -22,14 +22,14 @@ public class IncidentController {
 	@Autowired
 	private IncidentService incidentService;
 	
-	@RequestMapping("/")
+	@RequestMapping("/index")
 	public String showHomePage() {
 		return "/IncidentViews/index";
 	}
 	
-	@RequestMapping(value = "/find", method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String vewIncident(Model model) {
-		return "/IncidentViews/findAccount";
+		return "/IncidentViews/indexIncident";
 	}
 	
 	@RequestMapping("/new")

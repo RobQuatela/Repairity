@@ -22,8 +22,8 @@ public class IncidentServiceImpl implements IncidentService {
 	
 	@Override
 	@Transactional
-	public void saveIncident(Incident incident) {
-		incidentRepository.save(incident);
+	public Incident saveIncident(Incident incident) {
+		return incidentRepository.save(incident);
 	}
 
 	@Override

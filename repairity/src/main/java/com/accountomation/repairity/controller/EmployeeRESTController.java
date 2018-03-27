@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,6 +57,20 @@ public class EmployeeRESTController {
 			return new ResponseEntity<List<Employee>>(HttpStatus.NOT_FOUND);
 		
 		return new ResponseEntity<List<Employee>>(emps, HttpStatus.OK);
+	}
+	
+	@PutMapping(value = "/update")
+	public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee) {
+		Employee empUpdate = new Employee();
+		
+		try {
+			empUpdate = employeeService.updateEmployee(employee);
+		} catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<Employee>(HttpStatus.EXPECTATION_FAILED);
+		}
+		
+		return new ResponseEntity<Employee>(empUpdate, HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/new")

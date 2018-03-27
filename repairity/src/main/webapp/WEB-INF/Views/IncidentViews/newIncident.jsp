@@ -24,7 +24,7 @@
 	});
 
 	function newPage() {
-		window.location.href = "/repairity/incident/find";
+		window.location.href = "/repairity/incident/";
 	}
 
 	function submitAJAX() {

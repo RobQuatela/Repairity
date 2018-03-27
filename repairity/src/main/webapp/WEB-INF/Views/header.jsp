@@ -19,7 +19,7 @@
 				<ul class="navbar-nav">
 					<li class="navbar-brand">Repairity</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/repairity/incident/find">Incidents <span class="sr-only">(current)</span></a>
+						<a class="nav-link" href="/repairity/incident/">Incidents <span class="sr-only">(current)</span></a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="/repairity/employee/">Employees</a>
