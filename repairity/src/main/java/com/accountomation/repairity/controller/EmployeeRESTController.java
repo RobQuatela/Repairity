@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.accountomation.repairity.model.Company;
 import com.accountomation.repairity.model.Employee;
+import com.accountomation.repairity.model.Incident;
 import com.accountomation.repairity.service.EmployeeService;
 
 @RestController
@@ -42,6 +43,21 @@ public class EmployeeRESTController {
 		
 		List<Employee> emps = employeeService.getEmployees(co);
 		System.out.println(emps.size());
+		
+		if(emps.isEmpty())
+			return new ResponseEntity<List<Employee>>(HttpStatus.NOT_FOUND);
+		
+		return new ResponseEntity<List<Employee>>(emps, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/listByIncident")
+	public ResponseEntity<List<Employee>> listEmployeesByIncident(@RequestParam("id") String invoice) {
+		List<Employee> emps = new ArrayList<>();
+		Incident incident = new Incident();
+		incident.setId(invoice);
+		System.out.println("incident invoice: " + incident.getId());
+		emps = employeeService.getEmployeesByIncident(incident);
+		System.out.println("Emps for incident: " + incident.getId() + ": " + emps.size());
 		
 		if(emps.isEmpty())
 			return new ResponseEntity<List<Employee>>(HttpStatus.NOT_FOUND);

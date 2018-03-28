@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.accountomation.repairity.model.Company;
 import com.accountomation.repairity.model.Employee;
+import com.accountomation.repairity.model.Incident;
 import com.accountomation.repairity.repository.EmployeeRepository;
 
 @Service("employeeService")
@@ -52,6 +53,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public List<Employee> searchEmployees(String name) {
 		return employeeRepository.searchEmployees(name);
+	}
+
+	@Override
+	public List<Employee> getEmployeesByIncident(Incident incident) {
+		return employeeRepository.getEmployeesByIncident(incident);
 	}
 
 }

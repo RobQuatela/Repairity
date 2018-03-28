@@ -32,6 +32,11 @@ public class IncidentController {
 		return "/IncidentViews/indexIncident";
 	}
 	
+	@RequestMapping("/assign")
+	public String assignEmployees(Model model) {
+		return "/IncidentViews/assignEmployees";
+	}
+	
 	@RequestMapping("/new")
 	public String newIncident() {
 		return "/IncidentViews/newIncident";

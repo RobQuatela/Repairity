@@ -1,12 +1,20 @@
 package com.accountomation.repairity.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tbemployee")
@@ -15,6 +23,7 @@ public class Employee {
 	private String id;
 	private String name;
 	private Company company;
+	private List<EmployeeIncident> employeeIncident = new ArrayList<>();
 	
 	public Employee() {
 		
@@ -55,6 +64,16 @@ public class Employee {
 
 	public void setCompany(Company company) {
 		this.company = company;
+	}
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+	public List<EmployeeIncident> getEmployeeIncident() {
+		return employeeIncident;
+	}
+
+	public void setEmployeeIncident(List<EmployeeIncident> employeeIncident) {
+		this.employeeIncident = employeeIncident;
 	}
 	
 	

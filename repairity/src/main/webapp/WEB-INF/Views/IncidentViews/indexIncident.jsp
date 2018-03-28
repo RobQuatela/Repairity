@@ -76,28 +76,31 @@
 		<!-- 		<div id="qbo">test</div> -->
 		<div class="row alert alert-success" id="successUpdate" role="alert">Incident
 			Saved!</div>
-		<div class="row">
+		<div class="row" id="rowDisplayIncident">
 			<div class="col-4" style="overflow-y: auto; height: 600px;">
 				<div id="resultList"></div>
 			</div>
 			<div class="col-8">
 				<div class="container">
-					<div class="row">
-						<div class="col-10">
+					<div class="row" id="rowDisplayIncident1">
+						<div class="col-6">
 							<h1 class="display-4" id="editId"></h1>
 						</div>
-						<div class="col-2">
+						<div class="col-3">
+							<form id="frmAssignEmployees" action="/repairity/incident/assign">
+								<button class="btn btn-primary" type="submit">Assign
+									Employees</button>
+							</form>
+						</div>
+						<div class="col-3">
 							<form id="updateIncident">
 								<button class="btn btn-primary">Update Incident</button>
 							</form>
 						</div>
 					</div>
 				</div>
-				<!-- 	<div class="card">
-					<div class="card-header">Incident Detail</div>
-					<div class="card-body"> -->
 				<br />
-				<div class="row">
+				<div class="row" id="rowDisplayIncident2">
 					<div class="col-6">
 						<div class="mb-2">
 							<div class="input-group-prepend">
@@ -169,25 +172,36 @@
 						</div>
 					</div>
 				</div>
+				<div class="row" id="rowDisplayIncidentEmp1">
+					<div class="col-12">
+						<div class="lead">Employees Assigned</div>
+					</div>
+				</div>
+				<div class="row" id="rowDisplayIncidentEmp2">
+					<div class="col-12">
+						<table class="table">
+							<thead class="thead-dark">
+								<tr>
+									<th scope="col">Employee No.</th>
+									<th scope="col">Name</th>
+								</tr>
+							</thead>
+							<tbody id="empAssigned">
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="row" id="rowAssignEmployees">
+					<h1>Assign Employees</h1>
+				</div>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-12">
-				<div class="display-4">Employees Assigned</div>
-				
+		<div class="row" id="divError">
+			<div class="col-8">
+				<p class="alert alert-danger">Request Incident Details Not Found</p>
+			</div>
 		</div>
-	</div>
-	<!-- 		</div>
-	</div>
-	</div>
-	</div> -->
-
-	<div class="row" id="divError">
-		<div class="col-8">
-			<p class="alert alert-danger">Request Incident Details Not Found</p>
-		</div>
-	</div>
-	<%@ include file="/WEB-INF/Views/footer.jsp"%>
+		<%@ include file="/WEB-INF/Views/footer.jsp"%>
 	</div>
 
 	<script>
@@ -200,6 +214,10 @@
 				event.preventDefault();
 				updateIncident();
 			});
+			//$("#rowDisplayIncident1").hide();
+			//$("#rowDisplayIncident2").hide();
+			//$("#rowDisplayIncidentEmp1").hide();
+			//$("#rowDisplayIncidentEmp2").hide();
 
 			/*  		$("#incidentForm").submit(function(event) {
 						event.preventDefault();
@@ -229,6 +247,56 @@
 			listViaAjax();
 
 		});
+
+		function loadEmployees(incident) {
+			$
+					.ajax({
+						type : "GET",
+						contentType : "application/json",
+						url : "http://localhost:8080/repairity/employeeREST/listByIncident",
+						data : incident,
+						dataType : "json",
+						success : function(data) {
+							listEmployeesAssigned(data);
+						},
+						error : function(error, xhr) {
+							console
+									.log("there is an error on loadEmployees(): "
+											+ error);
+							document.getElementById("empAssigned").innerHTML = "";
+						}
+					});
+		}
+
+		function listEmployeesAssigned(data) {
+			console
+					.log("in listEmployeesAssigned...data length "
+							+ data.length);
+			var bodyEmpAssigned = document.getElementById("empAssigned");
+			bodyEmpAssigned.innerHTML = "";
+
+			for (var i = 0; i < data.length; i++) {
+				var tableRow = document.createElement("tr");
+				tableRow.id = "tableRow" + data[i].id;
+
+				var tableRowHeader = document.createElement("th");
+				tableRowHeader.scope = "row";
+				tableRowHeader.innerHTML = data[i].id;
+
+				var tableRowName = document.createElement("td");
+				tableRowName.innerHTML = data[i].name;
+
+				tableRow.appendChild(tableRowHeader);
+				tableRow.appendChild(tableRowName);
+				bodyEmpAssigned.appendChild(tableRow);
+
+				$("#tableRow" + data[i].id).hover(function() {
+					$(this).css("background-color", "yellow");
+				}, function() {
+					$(this).css("background-color", "white");
+				});
+			}
+		}
 
 		function enableSearchButton(flag) {
 			$("#btn-search").prop("disabled", flag);
@@ -454,6 +522,8 @@
 							$("#editId").innerHTML = "Didn't work...";
 						}
 					});
+
+			loadEmployees(incident);
 		}
 	</script>
 </body>

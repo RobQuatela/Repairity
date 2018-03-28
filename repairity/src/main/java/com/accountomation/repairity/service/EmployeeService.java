@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.accountomation.repairity.model.Company;
 import com.accountomation.repairity.model.Employee;
+import com.accountomation.repairity.model.Incident;
 
 public interface EmployeeService {
 
@@ -20,4 +21,6 @@ public interface EmployeeService {
 	public List<Employee> getEmployees();
 	
 	public List<Employee> searchEmployees(String name);
+	
+	public List<Employee> getEmployeesByIncident(Incident incident);
 }
