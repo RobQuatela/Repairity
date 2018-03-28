@@ -87,10 +87,8 @@
 							<h1 class="display-4" id="editId"></h1>
 						</div>
 						<div class="col-3">
-							<form id="frmAssignEmployees" action="/repairity/incident/assign">
-								<button class="btn btn-primary" type="submit">Assign
-									Employees</button>
-							</form>
+							<button class="btn btn-primary" type="submit"
+								id="btnAssignEmployees">Assign Employees</button>
 						</div>
 						<div class="col-3">
 							<form id="updateIncident">
@@ -191,8 +189,47 @@
 						</table>
 					</div>
 				</div>
-				<div class="row" id="rowAssignEmployees">
-					<h1>Assign Employees</h1>
+			</div>
+		</div>
+		<div class="row" id="rowAssignEmployees">
+			<div class="col-12">
+				<div class="row">
+					<div class="col-10">
+						<h1 class="display-4" id="rowAssignEmployeesHeading"></h1>
+					</div>
+					<div class="col-2">
+						<button class="btn btn-primary" id="btnCancelAssignment">Return to Incidents</button>
+					</div>
+				</div>
+				<br />
+				<div class="row">
+					<div class="col-12">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Employee No.</th>
+									<th>Name</th>
+								</tr>
+							</thead>
+							<tbody id="assignEmpTable">
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<br />
+				<div class="row">
+					<div class="col-12">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Employee No.</th>
+									<th>Name</th>
+								</tr>
+							</thead>
+							<tbody id="assignEmpAllTable">
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -214,39 +251,62 @@
 				event.preventDefault();
 				updateIncident();
 			});
-			//$("#rowDisplayIncident1").hide();
-			//$("#rowDisplayIncident2").hide();
-			//$("#rowDisplayIncidentEmp1").hide();
-			//$("#rowDisplayIncidentEmp2").hide();
+			$("#rowAssignEmployees").hide();
+			$("#btnAssignEmployees").click(function(event) {
+				$("#rowDisplayIncident").hide();
+				$("#rowAssignEmployeesHeading").append("Assign Employees to " + document.getElementById("editId").innerHTML);
+				var incident = {};
+				incident.id = document.getElementById("editId").innerHTML;
+				loadEmployeesForAssignment(incident);
+				$("#rowAssignEmployees").show();
+			});
 
-			/*  		$("#incidentForm").submit(function(event) {
-						event.preventDefault();
-						searchViaAjax();
-					});  */
-
-			/* 		$.ajax({
-						type: "GET",
-						contentType: "application/json",
-						url: "https://sandbox-quickbooks.api.intuit.com/v3/company/193514610014224/customer/2",
-						dataType: 'json',
-						headers: {
-								'Access-Control-Allow-Origin': 'http://localhost:8080'
-							},
-						beforeSend: function(xhr) {
-								xhr.setRequestHeader("Authorization", "Bearer eyJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwiYWxnIjoiZGlyIn0..AZ8r98PiFN6e-c2y28npug.9YV6Pw9ctpzq8TaUc25DiF_IE2_wCKSkpfeHREvyRwGaQDNTfnYFqiTWnnb792nCmAJDTXdxu8BCIp1vo2gEW8wJXEy-njZy4hgS21vfbpScnHY4YfGAnythevqUDJLdSxDWjlcJozRcYxzVdmBvXgmb1WUt4Pn8SL6V4WOpmbIq4f2zzgPLscJjbuVfCcHfieZfx0aXtiaP-dhgqGwHUBDkOXMT1QK-VDM8vVN-C9_1hAL7pPzX9MWIBqGRCsS-U3gs8XfLllXlbfKyly8WCbTMxGCJMRj-VYxllUsviHHdQEFmA6GkA5jRhZgkJdGRJ2793N1pQHEZ9mcRQbXFraGMpByC6U4XkqBJmEvnbuIN-j6paLEYJzrb1LC9TCD8R2GsOVvYRUzb0vQGP2cvGMhzbWRz-h_tEqwNV6QzA2-hLPzxhs5jntGtHbXTPuBcypGgCtZNHiymLkEArOf-5Qz5VC9mADTgEIMJyq2E0ZjiUJgSZBkK9ODl1AYKbS0SAAKqpB0N-xLJ_rVOkgb3XU1szLGls-yB6WtXJoNoCj0novabmUg_D_03Z3mHrC9CX2MPW_nd-KaQcpNH2pjLY95nLDKgUZmYdILGka5RpkdlleYrX_-UBebX5v6Cw9fhWC9RdGNzuj80eXmDkbhyzmkdvjbH4g0HSF4hQKPhlL3oy_zDFtknO72-BZAnZKh6dYRWGsG65kUgum4Xl28lVhodHrEePGyGNk_WPzNJsl8Zu_LYYolaZcPZaYkeCtDlHI1sMJcXHiA-eabbmqGS11rNZsRvIuDi4AMIjLDP_PmJEMdUEAef0LcCvZnZFeqH.rvdwceM-dAlf80DTB1lLIQ")
-							},
-						timeout: 100000,
-						success: function(data) {
-								$("#qbo").innerHTML = data.FamilyName;
-							},
-						error: function(e) {
-								
-							}
-					}); */
+			$("#btnCancelAssignment").click(function(event) {
+				document.getElementById("rowAssignEmployeesHeading").innerHTML = "";
+				document.getElementById("assignEmpTable").innerHTML = "";
+				$("#rowAssignEmployees").hide();
+				$("#rowDisplayIncident").show();
+			});
 
 			listViaAjax();
 
+			loadAllEmployees();
+
 		});
+
+		function loadAllEmployees() {
+			$
+					.ajax({
+						type: "GET",
+						contentType: "application/json",
+						url: "http://localhost:8080/repairity/employeeREST/list",
+						dataType: "json",
+						success: function(data) {
+								listAllEmployees(data);
+							},
+						error: function(error, xhr) {
+								console.log("Problem on loadAllEmployees: " + error);
+							}
+					});
+		}
+
+		function listAllEmployees(data) {
+			var tableBody = document.getElementById("assignEmpAllTable");
+			tableBody.innerHTML = "";
+
+			for(var i = 0; i < data.length; i++) {
+				var tableRow = document.createElement("tr");
+				tableRow.id = "assignEmpAllRow" + data[i].id;
+				var tableRowId = document.createElement("th");
+				tableRowId.innerHTML = data[i].id;
+				var tableRowName = document.createElement("td");
+				tableRowName.innerHTML = data[i].name;
+
+				tableRow.appendChild(tableRowId);
+				tableRow.appendChild(tableRowName);
+				tableBody.appendChild(tableRow);
+			}
+		}
 
 		function loadEmployees(incident) {
 			$
@@ -264,6 +324,26 @@
 									.log("there is an error on loadEmployees(): "
 											+ error);
 							document.getElementById("empAssigned").innerHTML = "";
+						}
+					});
+		}
+
+		function loadEmployeesForAssignment(incident) {
+			$
+					.ajax({
+						type : "GET",
+						contentType : "application/json",
+						url : "http://localhost:8080/repairity/employeeREST/listByIncident",
+						data : incident,
+						dataType : "json",
+						success : function(data) {
+							listEmployeesAssignedForAssignment(data);
+						},
+						error : function(error, xhr) {
+							console
+									.log("there is an error on loadEmployees(): "
+											+ error);
+							document.getElementById("assignEmpTable").innerHTML = "";
 						}
 					});
 		}
@@ -298,8 +378,34 @@
 			}
 		}
 
-		function enableSearchButton(flag) {
-			$("#btn-search").prop("disabled", flag);
+		function listEmployeesAssignedForAssignment(data) {
+			console
+					.log("in listEmployeesAssigned...data length "
+							+ data.length);
+			var bodyEmpAssigned = document.getElementById("assignEmpTable");
+			bodyEmpAssigned.innerHTML = "";
+
+			for (var i = 0; i < data.length; i++) {
+				var tableRow = document.createElement("tr");
+				tableRow.id = "tableRowAssigned" + data[i].id;
+
+				var tableRowHeader = document.createElement("th");
+				tableRowHeader.scope = "row";
+				tableRowHeader.innerHTML = data[i].id;
+
+				var tableRowName = document.createElement("td");
+				tableRowName.innerHTML = data[i].name;
+
+				tableRow.appendChild(tableRowHeader);
+				tableRow.appendChild(tableRowName);
+				bodyEmpAssigned.appendChild(tableRow);
+
+				$("#tableRowAssigned" + data[i].id).hover(function() {
+					$(this).css("background-color", "yellow");
+				}, function() {
+					$(this).css("background-color", "white");
+				});
+			}
 		}
 
 		function searchViaAjax() {
