@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.accountomation.repairity.model.Company;
 import com.accountomation.repairity.model.Employee;
+import com.accountomation.repairity.model.EmployeeIncident;
 import com.accountomation.repairity.model.Incident;
 import com.accountomation.repairity.service.EmployeeService;
 
@@ -116,5 +118,31 @@ public class EmployeeRESTController {
 		}
 		
 		return new ResponseEntity<List<Employee>>(emps, HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/assignEmployee")
+	public ResponseEntity<EmployeeIncident> assignEmployee(@RequestBody EmployeeIncident employeeIncident) {
+		EmployeeIncident empInc = new EmployeeIncident();
+		
+		try {
+			empInc = employeeService.assignEmployee(employeeIncident);
+		} catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<EmployeeIncident>(HttpStatus.EXPECTATION_FAILED);
+		}
+		
+		return new ResponseEntity<EmployeeIncident>(empInc, HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value = "/removeAssignment")
+	public ResponseEntity removeAssignment(@RequestBody EmployeeIncident employeeIncident) {
+		try {
+			employeeService.removeAssignment(employeeIncident);
+		} catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity(HttpStatus.EXPECTATION_FAILED);
+		}
+		
+		return new ResponseEntity(HttpStatus.OK);
 	}
 }

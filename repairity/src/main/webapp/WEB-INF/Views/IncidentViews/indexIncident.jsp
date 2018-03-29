@@ -13,229 +13,234 @@
 <body>
 	<div class="container">
 		<%@ include file="/WEB-INF/Views/header.jsp"%>
-		<div class="container">
-			<h1 class="display-2">Incidents</h1>
-		</div>
+		<h1 class="display-2">Incidents</h1>
 		<br />
-		<div class="row">
-			<div class="col-8">
-				<form:form cssClass="form-horizontal" role="form" id="incidentForm"
-					action="/repairity/incident/new">
-					<div class="form-group row">
-						<div class="col-2">Status:</div>
-						<div class="col-8">
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="checkbox" id="ckOpen"
-									value="ckOpen"> <label class="form-check-label"
-									for="ckOpen">Open</label>
+		<div id="displayIncident">
+			<div class="row">
+				<div class="col-8">
+					<form:form cssClass="form-horizontal" role="form" id="incidentForm"
+						action="/repairity/incident/new">
+						<div class="form-group row">
+							<div class="col-2">Status:</div>
+							<div class="col-8">
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="checkbox" id="ckOpen"
+										value="ckOpen"> <label class="form-check-label"
+										for="ckOpen">Open</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" type="checkbox" id="ckClosed"
+										value="ckClosed"> <label class="form-check-label"
+										for="ckClosed">Closed</label>
+								</div>
 							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="checkbox" id="ckClosed"
-									value="ckClosed"> <label class="form-check-label"
-									for="ckClosed">Closed</label>
+						</div>
+						<div class="form-group row">
+							<Label for="invoiceNo" class="col-2 col-form-label">Invoice
+								No:</Label>
+							<div class="col-8">
+								<input type="text" class="form-control"
+									placeholder="Enter Invoice No" name="invoiceNo" id="invoiceNo"
+									onkeyup="listViaAjax()" />
+							</div>
+							<div class="col-2">
+								<button type="submit" id="btn-search" class="btn btn-primary">
+									New Incident</button>
+							</div>
+						</div>
+					</form:form>
+				</div>
+			</div>
+			<div class="card row" id="searchResults">
+				<div class="container">
+					<h2 class="lead">Search Results</h2>
+				</div>
+			</div>
+			<br />
+			<div class="row" id="divResults">
+				<div class="col-8">
+					<div class="card">
+						<div class="card-header bg-success text-white">
+							<h3>Search Results</h3>
+						</div>
+						<div class="card-body">
+							<div id="invoiceNoResponse"></div>
+							<div id="status"></div>
+							<div id="customerName"></div>
+							<div id="complaint"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 		<div id="qbo">test</div> -->
+			<div class="row alert alert-success" id="successUpdate" role="alert">Incident
+				Saved!</div>
+			<div class="row" id="rowDisplayIncident">
+				<div class="col-4" style="overflow-y: auto; height: 600px;">
+					<div id="resultList"></div>
+				</div>
+				<div class="col-8">
+					<div class="container">
+						<div class="row" id="rowDisplayIncident1">
+							<div class="col-6">
+								<h1 class="display-4" id="editId"></h1>
+							</div>
+							<div class="col-3">
+								<button class="btn btn-primary" type="submit"
+									id="btnAssignEmployees">Assign Employees</button>
+							</div>
+							<div class="col-3">
+								<form id="updateIncident">
+									<button class="btn btn-primary">Update Incident</button>
+								</form>
 							</div>
 						</div>
 					</div>
-					<div class="form-group row">
-						<Label for="invoiceNo" class="col-2 col-form-label">Invoice
-							No:</Label>
-						<div class="col-8">
-							<input type="text" class="form-control"
-								placeholder="Enter Invoice No" name="invoiceNo" id="invoiceNo"
-								onkeyup="listViaAjax()" />
+					<br />
+					<div class="row" id="rowDisplayIncident2">
+						<div class="col-6">
+							<div class="mb-2">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Customer:</span> <input
+										type="text" id="editCustomer" class="form-control" />
+								</div>
+							</div>
+							<div class="mb-2">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Start:</span> <input type="date"
+										id="editStart" class="form-control" />
+								</div>
+							</div>
+							<div class="mb-2">
+								<div class="input-group-prepend">
+									<span class="input-group-text">End:</span> <input type="date"
+										id="editStop" class="form-control" />
+								</div>
+							</div>
+							<div class="mb-2">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Complaint:</span>
+									<textarea id="editComplaint" class="form-control"></textarea>
+								</div>
+							</div>
+							<div class="mb-2">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Status:</span> <input
+										type="text" id="editStatus" class="form-control" />
+								</div>
+							</div>
+							<div class="mb-2">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Address:</span> <input
+										type="text" id="editAddress" class="form-control" />
+								</div>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="mb-2">
+								<div class="input-group-prepend">
+									<span class="input-group-text">City:</span> <input type="text"
+										id="editCity" class="form-control" />
+								</div>
+							</div>
+							<div class="mb-2">
+								<div class="input-group-prepend">
+									<span class="input-group-text">State:</span> <input type="text"
+										id="editState" class="form-control" />
+								</div>
+							</div>
+							<div class="mb-2">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Zip Code:</span> <input
+										type="text" id="editZip" class="form-control" />
+								</div>
+							</div>
+							<div class="mb-2">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Phone Number:</span> <input
+										type="text" id="editPhone" class="form-control" />
+								</div>
+							</div>
+							<div class="mb-2">
+								<div class="input-group-prepend">
+									<span class="input-group-text">$:</span> <input type="text"
+										id="editAmount" class="form-control" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row" id="rowDisplayIncidentEmp1">
+						<div class="col-12">
+							<div class="lead">Employees Assigned</div>
+						</div>
+					</div>
+					<div class="row" id="rowDisplayIncidentEmp2">
+						<div class="col-12">
+							<table class="table">
+								<thead class="thead-dark">
+									<tr>
+										<th scope="col">Employee No.</th>
+										<th scope="col">Name</th>
+									</tr>
+								</thead>
+								<tbody id="empAssigned">
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="assignEmployees">
+			<div class="row" id="rowAssignEmployees">
+				<div class="col-12">
+					<div class="row">
+						<div class="col-10">
+							<h1 class="display-4" id="rowAssignEmployeesHeading"></h1>
 						</div>
 						<div class="col-2">
-							<button type="submit" id="btn-search" class="btn btn-primary">
-								New Incident</button>
+							<i class="fa fa-close" style="font-size: 80px" id="btnCancelAssignmentPic"></i>
 						</div>
 					</div>
-				</form:form>
-			</div>
-		</div>
-		<div class="card row" id="searchResults">
-			<div class="container">
-				<h2 class="lead">Search Results</h2>
-			</div>
-		</div>
-		<br />
-		<div class="row" id="divResults">
-			<div class="col-8">
-				<div class="card">
-					<div class="card-header bg-success text-white">
-						<h3>Search Results</h3>
-					</div>
-					<div class="card-body">
-						<div id="invoiceNoResponse"></div>
-						<div id="status"></div>
-						<div id="customerName"></div>
-						<div id="complaint"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- 		<div id="qbo">test</div> -->
-		<div class="row alert alert-success" id="successUpdate" role="alert">Incident
-			Saved!</div>
-		<div class="row" id="rowDisplayIncident">
-			<div class="col-4" style="overflow-y: auto; height: 600px;">
-				<div id="resultList"></div>
-			</div>
-			<div class="col-8">
-				<div class="container">
-					<div class="row" id="rowDisplayIncident1">
-						<div class="col-6">
-							<h1 class="display-4" id="editId"></h1>
+					<br />
+					<div class="row">
+						<div class="col-12" style="max-height: 200px; overflow-y: auto;">
+							<h1 class="lead">Assigned Employees:</h1>
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Employee No.</th>
+										<th>Name</th>
+										<th>Remove</th>
+									</tr>
+								</thead>
+								<tbody id="assignEmpTable">
+								</tbody>
+							</table>
 						</div>
-						<div class="col-3">
-							<button class="btn btn-primary" type="submit"
-								id="btnAssignEmployees">Assign Employees</button>
-						</div>
-						<div class="col-3">
-							<form id="updateIncident">
-								<button class="btn btn-primary">Update Incident</button>
-							</form>
+					</div>
+					<br />
+					<div class="row">
+						<div class="col-12" id="msgAssignEmployees"></div>
+					</div>
+					<div class="row">
+						<div class="col-12" style="max-height: 400px; overflow-y: scroll;">
+							<h1 class="lead">Available Employees:</h1>
+							<input type="text" class="form-control" id="txtAssignEmployeeSearch" placeholder="Search Employees" onkeyup="searchAvailableEmployees()" />
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Employee No.</th>
+										<th>Name</th>
+										<th>Assign</th>
+									</tr>
+								</thead>
+								<tbody id="assignEmpAllTable">
+								</tbody>
+							</table>
 						</div>
 					</div>
 				</div>
-				<br />
-				<div class="row" id="rowDisplayIncident2">
-					<div class="col-6">
-						<div class="mb-2">
-							<div class="input-group-prepend">
-								<span class="input-group-text">Customer:</span> <input
-									type="text" id="editCustomer" class="form-control" />
-							</div>
-						</div>
-						<div class="mb-2">
-							<div class="input-group-prepend">
-								<span class="input-group-text">Start:</span> <input type="date"
-									id="editStart" class="form-control" />
-							</div>
-						</div>
-						<div class="mb-2">
-							<div class="input-group-prepend">
-								<span class="input-group-text">End:</span> <input type="date"
-									id="editStop" class="form-control" />
-							</div>
-						</div>
-						<div class="mb-2">
-							<div class="input-group-prepend">
-								<span class="input-group-text">Complaint:</span>
-								<textarea id="editComplaint" class="form-control"></textarea>
-							</div>
-						</div>
-						<div class="mb-2">
-							<div class="input-group-prepend">
-								<span class="input-group-text">Status:</span> <input type="text"
-									id="editStatus" class="form-control" />
-							</div>
-						</div>
-						<div class="mb-2">
-							<div class="input-group-prepend">
-								<span class="input-group-text">Address:</span> <input
-									type="text" id="editAddress" class="form-control" />
-							</div>
-						</div>
-					</div>
-					<div class="col-6">
-						<div class="mb-2">
-							<div class="input-group-prepend">
-								<span class="input-group-text">City:</span> <input type="text"
-									id="editCity" class="form-control" />
-							</div>
-						</div>
-						<div class="mb-2">
-							<div class="input-group-prepend">
-								<span class="input-group-text">State:</span> <input type="text"
-									id="editState" class="form-control" />
-							</div>
-						</div>
-						<div class="mb-2">
-							<div class="input-group-prepend">
-								<span class="input-group-text">Zip Code:</span> <input
-									type="text" id="editZip" class="form-control" />
-							</div>
-						</div>
-						<div class="mb-2">
-							<div class="input-group-prepend">
-								<span class="input-group-text">Phone Number:</span> <input
-									type="text" id="editPhone" class="form-control" />
-							</div>
-						</div>
-						<div class="mb-2">
-							<div class="input-group-prepend">
-								<span class="input-group-text">$:</span> <input type="text"
-									id="editAmount" class="form-control" />
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row" id="rowDisplayIncidentEmp1">
-					<div class="col-12">
-						<div class="lead">Employees Assigned</div>
-					</div>
-				</div>
-				<div class="row" id="rowDisplayIncidentEmp2">
-					<div class="col-12">
-						<table class="table">
-							<thead class="thead-dark">
-								<tr>
-									<th scope="col">Employee No.</th>
-									<th scope="col">Name</th>
-								</tr>
-							</thead>
-							<tbody id="empAssigned">
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row" id="rowAssignEmployees">
-			<div class="col-12">
-				<div class="row">
-					<div class="col-10">
-						<h1 class="display-4" id="rowAssignEmployeesHeading"></h1>
-					</div>
-					<div class="col-2">
-						<button class="btn btn-primary" id="btnCancelAssignment">Return to Incidents</button>
-					</div>
-				</div>
-				<br />
-				<div class="row">
-					<div class="col-12">
-						<table class="table">
-							<thead>
-								<tr>
-									<th>Employee No.</th>
-									<th>Name</th>
-								</tr>
-							</thead>
-							<tbody id="assignEmpTable">
-							</tbody>
-						</table>
-					</div>
-				</div>
-				<br />
-				<div class="row">
-					<div class="col-12">
-						<table class="table">
-							<thead>
-								<tr>
-									<th>Employee No.</th>
-									<th>Name</th>
-								</tr>
-							</thead>
-							<tbody id="assignEmpAllTable">
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row" id="divError">
-			<div class="col-8">
-				<p class="alert alert-danger">Request Incident Details Not Found</p>
 			</div>
 		</div>
 		<%@ include file="/WEB-INF/Views/footer.jsp"%>
@@ -247,25 +252,38 @@
 			$('#divError').hide();
 			$('#searchResults').hide();
 			$("#successUpdate").hide();
+			$("#assignEmployees").hide();
+			
 			$("#updateIncident").submit(function(event) {
 				event.preventDefault();
 				updateIncident();
 			});
-			$("#rowAssignEmployees").hide();
+			
 			$("#btnAssignEmployees").click(function(event) {
-				$("#rowDisplayIncident").hide();
+				$("#displayIncident").slideUp();
 				$("#rowAssignEmployeesHeading").append("Assign Employees to " + document.getElementById("editId").innerHTML);
 				var incident = {};
 				incident.id = document.getElementById("editId").innerHTML;
 				loadEmployeesForAssignment(incident);
-				$("#rowAssignEmployees").show();
+				$("#assignEmployees").show();
 			});
 
-			$("#btnCancelAssignment").click(function(event) {
+ 			$("#btnCancelAssignmentPic").mousedown(function() {
+				$(this).css("border", "1px solid #ECECEC");
+			}).mouseup(function() {
+				$(this).css("font-size", "80px");
+			}).hover(function() {
+				$(this).css("font-size", "100px");
+				}, function() {
+				$(this).css("font-size", "80px");
+			});
+
+			$("#btnCancelAssignmentPic").click(function(event) {
 				document.getElementById("rowAssignEmployeesHeading").innerHTML = "";
 				document.getElementById("assignEmpTable").innerHTML = "";
-				$("#rowAssignEmployees").hide();
-				$("#rowDisplayIncident").show();
+				$("#assignEmployees").slideDown();
+				$("#assignEmployees").hide();
+				$("#displayIncident").show();
 			});
 
 			listViaAjax();
@@ -273,6 +291,21 @@
 			loadAllEmployees();
 
 		});
+
+		function displayMessage(element, className, message, parent) {
+			var p = document.getElementById(parent);
+			p.innerHTML = "";
+			
+			var msg = document.createElement(element);
+			msg.className = className;
+			msg.innerHTML = message;
+			msg.role = "alert";
+			msg.id = "msg";
+			
+			p.appendChild(msg);
+
+			$("#msg").fadeOut(2000);
+		}
 
 		function loadAllEmployees() {
 			$
@@ -301,10 +334,23 @@
 				tableRowId.innerHTML = data[i].id;
 				var tableRowName = document.createElement("td");
 				tableRowName.innerHTML = data[i].name;
+				var tableRowAdd = document.createElement("i");
+				tableRowAdd.className = "fa fa-plus";
+				tableRowAdd.style = "font-size: 26px";
+				tableRowAdd.id = "addAssignment" + data[i].id;
 
 				tableRow.appendChild(tableRowId);
 				tableRow.appendChild(tableRowName);
+				tableRow.appendChild(tableRowAdd);
 				tableBody.appendChild(tableRow);
+
+				$("#addAssignment" + data[i].id).hover(function() {
+					$(this).css("color", "green");
+				}, function() {
+					$(this).css("color", "black");
+				}).click({ id: data[i].id
+					},assignEmployee);
+					
 			}
 		}
 
@@ -396,23 +442,78 @@
 				var tableRowName = document.createElement("td");
 				tableRowName.innerHTML = data[i].name;
 
+				var tableRowRemove = document.createElement("i");
+				tableRowRemove.className = "fa fa-trash-o";
+				tableRowRemove.style = "font-size: 36px";
+				tableRowRemove.id = "removeAssignment" + data[i].id;
+
 				tableRow.appendChild(tableRowHeader);
 				tableRow.appendChild(tableRowName);
+				tableRow.appendChild(tableRowRemove);
 				bodyEmpAssigned.appendChild(tableRow);
 
-				$("#tableRowAssigned" + data[i].id).hover(function() {
-					$(this).css("background-color", "yellow");
+				$("#removeAssignment" + data[i].id).hover(function() {
+					$(this).css("color", "red");
 				}, function() {
-					$(this).css("background-color", "white");
-				});
+					$(this).css("color", "black");
+				}).click({
+					id: data[i].id
+				}, removeAssignment);
 			}
 		}
 
+		function assignEmployee(event) {
+			var employeeIncident = {}, employee = {}, incident = {};
+			employee.id = event.data.id;
+			incident.id = document.getElementById("editId").innerHTML;
+			employeeIncident.employee = employee;
+			employeeIncident.incident = incident;
+
+			$.ajax({
+				type: "POST",
+				contentType: "application/json",
+				url: "http://localhost:8080/repairity/employeeREST/assignEmployee",
+				data: JSON.stringify(employeeIncident),
+				timeout: 100000,
+				success: function(data) {
+						console.log("success for assignment");
+						displayMessage("div", "alert alert-success", "Employee Has Been Assigned!", "msgAssignEmployees");
+						loadEmployeesForAssignment(incident);
+						loadEmployees(incident);
+					},
+				error: function(error, xhr) {
+						console.log("error for assignment");
+					}
+			});	
+		}
+
+		function removeAssignment(event) {
+			var employeeIncident = {}, employee = {}, incident = {};
+			employee.id = event.data.id;
+			incident.id = document.getElementById("editId").innerHTML;
+			employeeIncident.employee = employee;
+			employeeIncident.incident = incident;
+
+			$.ajax({
+				type: "DELETE",
+				contentType: "application/json",
+				url: "http://localhost:8080/repairity/employeeREST/removeAssignment",
+				data: JSON.stringify(employeeIncident),
+				timeout: 100000,
+				success: function(data) {
+						displayMessage("div", "alert alert-success", "Assignment Has Been Removed", "msgAssignEmployees");
+						loadEmployeesForAssignment(incident);
+						loadEmployees(incident);
+					},
+				error: function(error, xhr) {
+						displayMessage("div", "alert alert-danger", "Assignment was not removed: " + error, "msgAssignEmployees");
+					}
+			});	
+		}
+
 		function searchViaAjax() {
-			console.log("search AJAX method");
 			var incdt = {}
 			incdt.id = $("#invoiceNo").val();
-			console.log("invoiceno: " + incdt.id);
 			$.ajax({
 				type : "GET",
 				contentType : "application/json",
@@ -428,8 +529,28 @@
 					$('#divError').show();
 				},
 				done : function(e) {
-					//enableSearchButton(true);
 					console.log("done with ajax function");
+				}
+			});
+		}
+
+		function searchAvailableEmployees() {
+			var employee = {}
+			var search = $("#txtAssignEmployeeSearch").val();
+			employee.name = search;
+			console.log(employee.name);
+			$.ajax({
+				type : "GET",
+				contentType : "application/json",
+				url : "http://localhost:8080/repairity/employeeREST/search",
+				data : employee,
+				dataType : 'json',
+				timeout : 100000,
+				success : function(data) {
+					listAllEmployees(data);
+				},
+				error : function(e) {
+
 				}
 			});
 		}
@@ -437,7 +558,6 @@
 		function listViaAjax() {
 			var incdt = {};
 			incdt.id = $("#invoiceNo").val();
-			console.log("invoiceno: " + incdt.id);
 			$.ajax({
 				type : "GET",
 				contentType : "application/json",
@@ -457,10 +577,15 @@
 
 		function updateIncident() {
 			var incdt = {};
+			var start = new Date($("#editStart").val());
+			start.setMinutes(start.getMinutes() + start.getTimezoneOffset());
+			var stop = new Date($("#editStop").val());
+			stop.setMinutes(stop.getMinutes() + stop.getTimezoneOffset());
+
 			incdt.id = document.getElementById("editId").innerHTML;
 			incdt.customer = $("#editCustomer").val();
-			incdt.start = $("#editStart").val();
-			incdt.stop = $("#editStop").val();
+			incdt.start = start;
+			incdt.stop = stop;
 			incdt.complaint = $("#editComplaint").val();
 			incdt.status = $("#editStatus").val();
 			incdt.address = $("#editAddress").val();
@@ -469,7 +594,7 @@
 			incdt.zip = $("#editZip").val();
 			incdt.phone = $("#editPhone").val();
 			incdt.amount = $("#editAmount").val();
-			console.log(incdt.start);
+
 			$.ajax({
 				type : "PUT",
 				contentType : "application/json",
@@ -478,7 +603,7 @@
 				dataType : 'json',
 				timeout : 100000,
 				success : function() {
-					console.log("incident saved...");
+					listViaAjax();
 					$("#successUpdate").innerHTML = "Incident Saved";
 					$("#successUpdate").show();
 					$("#successUpdate").fadeOut(2000);
@@ -502,7 +627,6 @@
 			$('#status').html("Status: " + data.status);
 			$('#customerName').html("Customer: " + data.customer);
 			$('#complaint').html("Incident: " + data.complaint);
-			$('#divError').hide();
 			$('#divResults').show();
 		}
 

@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.accountomation.repairity.model.Company;
 import com.accountomation.repairity.model.Employee;
+import com.accountomation.repairity.model.EmployeeIncident;
 import com.accountomation.repairity.model.Incident;
+import com.accountomation.repairity.repository.EmployeeIncidentRepository;
 import com.accountomation.repairity.repository.EmployeeRepository;
 
 @Service("employeeService")
@@ -15,9 +17,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	private EmployeeRepository employeeRepository;
 	
+	private EmployeeIncidentRepository employeeIncidentRepository;
+	
 	@Autowired
 	public void setEmployeeRepository(EmployeeRepository employeeRepository) {
 		this.employeeRepository = employeeRepository;
+	}
+	
+	@Autowired
+	public void setEmployeeIncidentRepository(EmployeeIncidentRepository employeeIncidentRepository) {
+		this.employeeIncidentRepository = employeeIncidentRepository;
 	}
 
 	@Override
@@ -58,6 +67,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public List<Employee> getEmployeesByIncident(Incident incident) {
 		return employeeRepository.getEmployeesByIncident(incident);
+	}
+
+	@Override
+	public EmployeeIncident assignEmployee(EmployeeIncident employeeIncident) {
+		return employeeIncidentRepository.save(employeeIncident);
+	}
+
+	@Override
+	public EmployeeIncident updateAssignment(EmployeeIncident employeeIncident) {
+		return employeeIncidentRepository.update(employeeIncident);
+	}
+
+	@Override
+	public void removeAssignment(EmployeeIncident employeeIncident) {
+		employeeIncidentRepository.delete(employeeIncident);
 	}
 
 }

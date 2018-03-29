@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.accountomation.repairity.model.Company;
 import com.accountomation.repairity.model.Employee;
+import com.accountomation.repairity.model.EmployeeIncident;
 import com.accountomation.repairity.model.Incident;
 
 public interface EmployeeService {
@@ -23,4 +24,10 @@ public interface EmployeeService {
 	public List<Employee> searchEmployees(String name);
 	
 	public List<Employee> getEmployeesByIncident(Incident incident);
+	
+	public EmployeeIncident assignEmployee(EmployeeIncident employeeIncident);
+	
+	public EmployeeIncident updateAssignment(EmployeeIncident employeeIncident);
+	
+	public void removeAssignment(EmployeeIncident employeeIncident);
 }
