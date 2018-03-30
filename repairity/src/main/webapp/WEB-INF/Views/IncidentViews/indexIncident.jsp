@@ -16,7 +16,7 @@
 		<h1 class="display-2">Incidents</h1>
 		<br />
 		<div id="displayIncident">
-			<div class="row">
+			<div class="row" id="searchIncidents">
 				<div class="col-8">
 					<form:form cssClass="form-horizontal" role="form" id="incidentForm"
 						action="/repairity/incident/new">
@@ -39,9 +39,18 @@
 							<Label for="invoiceNo" class="col-2 col-form-label">Invoice
 								No:</Label>
 							<div class="col-8">
+							<div class="input-group">
 								<input type="text" class="form-control"
 									placeholder="Enter Invoice No" name="invoiceNo" id="invoiceNo"
-									onkeyup="listViaAjax()" />
+									onkeyup="listViaAjax()" >
+								<div class="input-group-append">
+									<span class="input-group-text" id="btnNewIncident">
+										<button class="btn btn-light">
+											<i class="material-icons" style="font-size: 30px;">add</i>
+										</button>
+									</span>
+								</div>
+							</div>
 							</div>
 							<div class="col-2">
 								<button type="submit" id="btn-search" class="btn btn-primary">
@@ -51,52 +60,40 @@
 					</form:form>
 				</div>
 			</div>
-			<div class="card row" id="searchResults">
-				<div class="container">
-					<h2 class="lead">Search Results</h2>
-				</div>
-			</div>
 			<br />
-			<div class="row" id="divResults">
-				<div class="col-8">
-					<div class="card">
-						<div class="card-header bg-success text-white">
-							<h3>Search Results</h3>
-						</div>
-						<div class="card-body">
-							<div id="invoiceNoResponse"></div>
-							<div id="status"></div>
-							<div id="customerName"></div>
-							<div id="complaint"></div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- 		<div id="qbo">test</div> -->
 			<div class="row alert alert-success" id="successUpdate" role="alert">Incident
 				Saved!</div>
 			<div class="row" id="rowDisplayIncident">
-				<div class="col-4" style="overflow-y: auto; height: 600px;">
+				<div class="col-4" style="overflow-y: auto; max-height: 600px;">
 					<div id="resultList"></div>
 				</div>
-				<div class="col-8">
-					<div class="container">
-						<div class="row" id="rowDisplayIncident1">
-							<div class="col-6">
-								<h1 class="display-4" id="editId"></h1>
-							</div>
-							<div class="col-3">
-								<button class="btn btn-primary" type="submit"
-									id="btnAssignEmployees">Assign Employees</button>
-							</div>
-							<div class="col-3">
-								<form id="updateIncident">
-									<button class="btn btn-primary">Update Incident</button>
-								</form>
-							</div>
+				<div class="col-8" style="overflow-y: auto; max-height: 600px;">
+					<div class="row" id="rowDisplayIncidentHeader" class="bg-primary">
+						<div class="col-9 bg-dark text-white">
+							<h1 class="display-4" id="editId"></h1>
+						</div>
+						<div class="col-1 bg-dark d-flex align-items-center">
+							<button class="btn btn-light" id="btnAssignEmployees">
+								<i class="material-icons" style="font-size: 20px;">person_add</i>
+							</button>
+						</div>
+						<div class="col-1 bg-dark d-flex align-items-center">
+							<button class="btn btn-light" id="btnUpdateIncident">
+								<i class="material-icons" style="font-size: 20px;">save</i>
+							</button>
+						</div>
+						<div class="col-1 bg-dark d-flex align-items-center">
+							<button class="btn btn-light" id="btnLogActivity">
+								<i class="material-icons" style="font-size: 20px;">assignment</i>
+							</button>
 						</div>
 					</div>
 					<br />
+					<div class="row" id="rowDisplayIncident1">
+						<div class="col-12">
+							<h1 class="lead">Incident Information</h1>
+						</div>
+					</div>
 					<div class="row" id="rowDisplayIncident2">
 						<div class="col-6">
 							<div class="mb-2">
@@ -199,7 +196,9 @@
 							<h1 class="display-4" id="rowAssignEmployeesHeading"></h1>
 						</div>
 						<div class="col-2">
-							<i class="fa fa-close" style="font-size: 80px" id="btnCancelAssignmentPic"></i>
+							<button id="btnCancelAssignmentPic" class="btn btn-light">
+								<i class="fa fa-close" style="font-size: 80px"></i>
+							</button>
 						</div>
 					</div>
 					<br />
@@ -226,7 +225,9 @@
 					<div class="row">
 						<div class="col-12" style="max-height: 400px; overflow-y: scroll;">
 							<h1 class="lead">Available Employees:</h1>
-							<input type="text" class="form-control" id="txtAssignEmployeeSearch" placeholder="Search Employees" onkeyup="searchAvailableEmployees()" />
+							<input type="text" class="form-control"
+								id="txtAssignEmployeeSearch" placeholder="Search Employees"
+								onkeyup="searchAvailableEmployees()" />
 							<table class="table">
 								<thead>
 									<tr>
@@ -254,7 +255,8 @@
 			$("#successUpdate").hide();
 			$("#assignEmployees").hide();
 			
-			$("#updateIncident").submit(function(event) {
+
+			$("#btnUpdateIncident").click(function(event) {
 				event.preventDefault();
 				updateIncident();
 			});
@@ -266,16 +268,6 @@
 				incident.id = document.getElementById("editId").innerHTML;
 				loadEmployeesForAssignment(incident);
 				$("#assignEmployees").show();
-			});
-
- 			$("#btnCancelAssignmentPic").mousedown(function() {
-				$(this).css("border", "1px solid #ECECEC");
-			}).mouseup(function() {
-				$(this).css("font-size", "80px");
-			}).hover(function() {
-				$(this).css("font-size", "100px");
-				}, function() {
-				$(this).css("font-size", "80px");
 			});
 
 			$("#btnCancelAssignmentPic").click(function(event) {
