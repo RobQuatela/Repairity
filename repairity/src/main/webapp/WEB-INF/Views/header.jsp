@@ -6,17 +6,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="/WEB-INF/css/style.css">
 <div class="row">
-	<div class="col-2">
-		<div class="header clearfix">
-			<h2 class="text-muted">Repairity</h2>
-		</div>
-	</div>
-	<div class="col-10">
-		<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-<!-- 			<a class="navbar-brand" href="#">Repairity</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" ariacontrols="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button> -->
+	<div class="col-12">
+		<nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background: #6CBEFD;">
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<ul class="navbar-nav">
 					<li class="navbar-brand">Repairity</li>
