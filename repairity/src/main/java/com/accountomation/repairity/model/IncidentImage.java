@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "incidentimage")
+@Table(name = "incident_image")
 public class IncidentImage {
 
 	private Long id;
@@ -37,7 +37,7 @@ public class IncidentImage {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "iiid")
+	@Column(name = "id")
 	public Long getId() {
 		return id;
 	}
@@ -46,7 +46,7 @@ public class IncidentImage {
 		this.id = id;
 	}
 
-	@Column(name = "iiimageurl")
+	@Column(name = "image_url")
 	public String getImageUrl() {
 		return imageUrl;
 	}
@@ -57,7 +57,7 @@ public class IncidentImage {
 
 	@ManyToOne(targetEntity = Incident.class)
 	@JoinColumn(name = "incident", nullable = false,
-		foreignKey = @ForeignKey(name = "fk_incidentimage_incident"))
+		foreignKey = @ForeignKey(name = "fk_incident_image_incident"))
 	public Incident getIncident() {
 		return incident;
 	}

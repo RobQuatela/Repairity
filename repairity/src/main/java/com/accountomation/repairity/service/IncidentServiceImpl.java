@@ -8,16 +8,23 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.accountomation.repairity.model.Incident;
 import com.accountomation.repairity.model.IncidentLog;
+import com.accountomation.repairity.repository.IncidentLogRepository;
 import com.accountomation.repairity.repository.IncidentRepository;
 
 @Service("incidentService")
 public class IncidentServiceImpl implements IncidentService {
 
 	private IncidentRepository incidentRepository;
+	private IncidentLogRepository incidentLogRepository;
 	
 	@Autowired
 	public void setIncidentRepository(IncidentRepository incidentRepository) {
 		this.incidentRepository = incidentRepository;
+	}
+	
+	@Autowired
+	public void setIncidentLogRepository(IncidentLogRepository incidentLogRepository) {
+		this.incidentLogRepository = incidentLogRepository;
 	}
 	
 	@Override
@@ -57,5 +64,22 @@ public class IncidentServiceImpl implements IncidentService {
 	public List<Incident> getIncidents(String id) {
 		return incidentRepository.list(id);
 	}
+
+	@Override
+	public IncidentLog logActivity(IncidentLog incidentLog) {
+		return incidentLogRepository.save(incidentLog);
+	}
+
+	@Override
+	public List<IncidentLog> listIncidentLog(Incident incident) {
+		return incidentLogRepository.list(incident);
+	}
+
+	@Override
+	public void removeLog(IncidentLog incidentLog) {
+		incidentLogRepository.delete(incidentLog);
+	}
+	
+	
 
 }

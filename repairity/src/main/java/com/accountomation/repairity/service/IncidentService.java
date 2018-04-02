@@ -20,4 +20,10 @@ public interface IncidentService {
 	public void log(IncidentLog incidentLog);
 	
 	public List<Incident> getIncidents(String id);
+	
+	public IncidentLog logActivity(IncidentLog incidentLog);
+	
+	public List<IncidentLog> listIncidentLog(Incident incident);
+	
+	public void removeLog(IncidentLog incidentLog);
 }

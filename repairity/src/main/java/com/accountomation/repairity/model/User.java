@@ -23,7 +23,7 @@ public class User {
 	}
 
 	@Id
-	@Column(name = "user_email")
+	@Column(name = "email")
 	public String getEmail() {
 		return email;
 	}
@@ -32,7 +32,7 @@ public class User {
 		this.email = email;
 	}
 
-	@Column(name = "user_password")
+	@Column(name = "password")
 	public String getPassword() {
 		return password;
 	}
@@ -43,7 +43,7 @@ public class User {
 
 	@ManyToOne(targetEntity = UserRole.class)
 	@JoinColumn(name = "role", nullable = false,
-			foreignKey = @ForeignKey(name = "fk_user_userrole"))
+			foreignKey = @ForeignKey(name = "fk_user_role"))
 	public UserRole getRole() {
 		return role;
 	}

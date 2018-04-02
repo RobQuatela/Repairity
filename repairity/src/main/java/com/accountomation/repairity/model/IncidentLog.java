@@ -13,11 +13,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "incidentlog")
+@Table(name = "incident_log")
 public class IncidentLog {
 
 	private Long id;
-	private Date logDate;
+	private Date date;
 	private String notes;
 	private Incident incident;
 	
@@ -25,24 +25,24 @@ public class IncidentLog {
 		
 	}
 
-	public IncidentLog(Long id, Date logDate, String notes, Incident incident) {
+	public IncidentLog(Long id, Date date, String notes, Incident incident) {
 		super();
 		this.id = id;
-		this.logDate = logDate;
+		this.date = date;
 		this.notes = notes;
 		this.incident = incident;
 	}
 
 	public IncidentLog(Date logDate, String notes, Incident incident) {
 		super();
-		this.logDate = logDate;
+		this.date = logDate;
 		this.notes = notes;
 		this.incident = incident;
 	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ilid")
+	@Column(name = "id")
 	public Long getId() {
 		return id;
 	}
@@ -51,16 +51,16 @@ public class IncidentLog {
 		this.id = id;
 	}
 
-	@Column(name = "ildate")
-	public Date getLogDate() {
-		return logDate;
+	@Column(name = "date")
+	public Date getDate() {
+		return date;
 	}
 
-	public void setLogDate(Date logDate) {
-		this.logDate = logDate;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
-	@Column(name = "ilnotes")
+	@Column(name = "notes")
 	public String getNotes() {
 		return notes;
 	}
@@ -71,7 +71,7 @@ public class IncidentLog {
 
 	@ManyToOne(targetEntity = Incident.class)
 	@JoinColumn(name = "incident", nullable = false,
-		foreignKey = @ForeignKey(name = "fk_incidentlog_incident"))
+		foreignKey = @ForeignKey(name = "fk_incident_log_incident"))
 	public Incident getIncident() {
 		return incident;
 	}

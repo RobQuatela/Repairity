@@ -1,9 +1,15 @@
 package com.accountomation.repairity.repository;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -11,18 +17,17 @@ import com.accountomation.repairity.model.Incident;
 import com.accountomation.repairity.model.IncidentLog;
 
 @Repository("incidentLogRepository")
+@Transactional
 public class IncidentLogRepositoryImpl implements IncidentLogRepository {
 
 	@Autowired
 	private SessionFactory sessionFactory;
 
 	@Override
-	public void save(IncidentLog incidentLog) {
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
+	public IncidentLog save(IncidentLog incidentLog) {
+		Session session = sessionFactory.getCurrentSession();
 		session.saveOrUpdate(incidentLog);
-		session.getTransaction().commit();
-		session.close();
+		return incidentLog;
 	}
 
 	@Override
@@ -36,11 +41,9 @@ public class IncidentLogRepositoryImpl implements IncidentLogRepository {
 
 	@Override
 	public void delete(IncidentLog incidentLog) {
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		session.delete(incidentLog);
-		session.getTransaction().commit();
-		session.close();
+		Session session = sessionFactory.getCurrentSession();
+		IncidentLog il = session.load(IncidentLog.class, incidentLog.getId());
+		session.delete(il);
 	}
 
 	@Override
@@ -51,8 +54,22 @@ public class IncidentLogRepositoryImpl implements IncidentLogRepository {
 
 	@Override
 	public List<IncidentLog> list(Incident incident) {
-		// TODO Auto-generated method stub
-		return null;
+		List<IncidentLog> incidentLog = new ArrayList<>();
+		
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			CriteriaQuery<IncidentLog> criteria = session.getCriteriaBuilder().createQuery(IncidentLog.class);
+			Root<IncidentLog> root = criteria.from(IncidentLog.class);
+			criteria
+				.select(root)
+				.where(session.getCriteriaBuilder().equal(root.get("incident"), incident));
+			Query<IncidentLog> query = session.createQuery(criteria);
+			incidentLog = query.getResultList();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return incidentLog;
 	}
 	
 	

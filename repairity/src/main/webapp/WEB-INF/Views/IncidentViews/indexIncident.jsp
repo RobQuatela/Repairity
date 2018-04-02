@@ -38,7 +38,7 @@
 						<div class="form-group row">
 							<Label for="invoiceNo" class="col-2 col-form-label">Invoice
 								No:</Label>
-							<div class="col-8">
+							<div class="col-10">
 							<div class="input-group">
 								<input type="text" class="form-control"
 									placeholder="Enter Invoice No" name="invoiceNo" id="invoiceNo"
@@ -52,39 +52,38 @@
 								</div>
 							</div>
 							</div>
-							<div class="col-2">
+<!-- 							<div class="col-2">
 								<button type="submit" id="btn-search" class="btn btn-primary">
 									New Incident</button>
-							</div>
+							</div> -->
 						</div>
 					</form:form>
 				</div>
 			</div>
 			<br />
-			<div class="row alert alert-success" id="successUpdate" role="alert">Incident
-				Saved!</div>
+			<div class="row alert alert-success" id="successUpdate" role="alert"></div>
 			<div class="row" id="rowDisplayIncident">
 				<div class="col-4" style="overflow-y: auto; max-height: 600px;">
 					<div id="resultList"></div>
 				</div>
 				<div class="col-8" style="overflow-y: auto; max-height: 600px;">
 					<div class="row" id="rowDisplayIncidentHeader" class="bg-primary">
-						<div class="col-9 bg-dark text-white">
+						<div class="col-6 bg-dark text-white">
 							<h1 class="display-4" id="editId"></h1>
 						</div>
-						<div class="col-1 bg-dark d-flex align-items-center">
+						<div class="col-2 bg-dark d-flex align-items-center">
 							<button class="btn btn-light" id="btnAssignEmployees">
-								<i class="material-icons" style="font-size: 20px;">person_add</i>
+								<i class="material-icons" style="font-size: 45px;">person_add</i>
 							</button>
 						</div>
-						<div class="col-1 bg-dark d-flex align-items-center">
+						<div class="col-2 bg-dark d-flex align-items-center">
 							<button class="btn btn-light" id="btnUpdateIncident">
-								<i class="material-icons" style="font-size: 20px;">save</i>
+								<i class="material-icons" style="font-size: 45px;">save</i>
 							</button>
 						</div>
-						<div class="col-1 bg-dark d-flex align-items-center">
+						<div class="col-2 bg-dark d-flex align-items-center">
 							<button class="btn btn-light" id="btnLogActivity">
-								<i class="material-icons" style="font-size: 20px;">assignment</i>
+								<i class="material-icons" style="font-size: 45px;">assignment</i>
 							</button>
 						</div>
 					</div>
@@ -154,7 +153,7 @@
 							</div>
 							<div class="mb-2">
 								<div class="input-group-prepend">
-									<span class="input-group-text">Phone Number:</span> <input
+									<span class="input-group-text">Phone:</span> <input
 										type="text" id="editPhone" class="form-control" />
 								</div>
 							</div>
@@ -182,6 +181,25 @@
 								</thead>
 								<tbody id="empAssigned">
 								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="row" id="rowDisplayLogTitle">
+						<div class="col-12">
+							<div class="lead">Incident Log</div>
+						</div>
+					</div>
+					<div class="row" id="rowDisplayLogBody">
+						<div class="col-12">
+							<table class="table">
+								<thead class="thead-dark">
+									<tr>
+										<th>Date</th>
+										<th>Notes</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody id="displayLogBodyTable"></tbody>
 							</table>
 						</div>
 					</div>
@@ -244,6 +262,37 @@
 				</div>
 			</div>
 		</div>
+		<div id="logActivity">
+			<div class="row mb-2">
+				<div class="col-8">
+					<h1 class="display-4" id="titleLogActivity"></h1>
+				</div>
+				<div class="col-2">
+					<button class="btn btn-secondary pull-right" id="btnSaveLogActivity">
+						<i class="material-icons" style="font-size: 50px">check</i>
+					</button>
+				</div>
+				<div class="col-2">
+					<button class="btn btn-secondary pull-right" id="btnCloseLogActivity">
+						<i class="fa fa-close" style="font-size: 50px"></i>
+					</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<div class="input-group mb-2">
+						<input type="date" id="incidentLogDate" class="form-control"/>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<div class="input-group mb-2">
+						<textarea id="incidentLogNotes" class="form-control"></textarea>
+					</div>
+				</div>
+			</div>
+		</div>
 		<%@ include file="/WEB-INF/Views/footer.jsp"%>
 	</div>
 
@@ -254,11 +303,13 @@
 			$('#searchResults').hide();
 			$("#successUpdate").hide();
 			$("#assignEmployees").hide();
+			$("#logActivity").hide();
 			
 
 			$("#btnUpdateIncident").click(function(event) {
 				event.preventDefault();
 				updateIncident();
+				displ
 			});
 			
 			$("#btnAssignEmployees").click(function(event) {
@@ -268,6 +319,47 @@
 				incident.id = document.getElementById("editId").innerHTML;
 				loadEmployeesForAssignment(incident);
 				$("#assignEmployees").show();
+			});
+
+			$("#btnLogActivity").click(function(event) {
+				$("#displayIncident").slideUp();
+				$("#titleLogActivity").append("Log Activity for " + document.getElementById("editId").innerHTML);
+				$("#logActivity").show();
+			});
+
+			$("#btnSaveLogActivity").click(function(event) {
+				console.log("entering btnSaveLogActivity event handler...");
+				var incident = {};
+				incident.id = document.getElementById("editId").innerHTML;
+				console.log(incident.id);
+				incidentLog = {};
+				incidentLog.date = $("#incidentLogDate").val();
+				incidentLog.notes = $("#incidentLogNotes").val();
+				incidentLog.incident = incident;
+
+				$.ajax({
+					type: "POST",
+					contentType: "application/json",
+					url: "http://localhost:8080/repairity/incidentREST/logActivity",
+					data: JSON.stringify(incidentLog),
+					dataType: "json",
+					timeout: 100000,
+					success: function(data) {
+							$("#logActivity").slideUp();
+							$("#displayIncident").show();
+							displayMessage("row alert alert-success", "Activity has been logged!", "successUpdate", 2000);
+							loadIncidentLog(incident);
+						},
+					error: function(error, xhr) {
+							displayMessage("row alert alert-danger", "ERROR: Activity was not logged", "successUpdate", 5000);
+						}
+				});
+			});
+
+			$("#btnCloseLogActivity").click(function(event) {
+				$("#logActivity").slideUp();
+				document.getElementById("titleLogActivity").innerHTML = "";
+				$("#displayIncident").show();
 			});
 
 			$("#btnCancelAssignmentPic").click(function(event) {
@@ -284,19 +376,87 @@
 
 		});
 
-		function displayMessage(element, className, message, parent) {
+		function displayMessage(className, message, parent, fadeOut) {
 			var p = document.getElementById(parent);
-			p.innerHTML = "";
-			
-			var msg = document.createElement(element);
-			msg.className = className;
-			msg.innerHTML = message;
-			msg.role = "alert";
-			msg.id = "msg";
-			
-			p.appendChild(msg);
 
-			$("#msg").fadeOut(2000);
+			p.className = className;
+			p.innerHTML = message;
+			p.role = "alert";
+
+			$(p).show();
+			$(p).fadeOut(fadeOut);
+		}
+
+		function loadIncidentLog(incident) {
+			$.ajax({
+				type: "GET",
+				contentType: "application/json",
+				url: "http://localhost:8080/repairity/incidentREST/getActivityLog",
+				data: incident,
+				dataType: "json",
+				timeout: 100000,
+				success: function(data) {
+						var body = document.getElementById("displayLogBodyTable");
+						body.innerHTML = "";
+						console.log(data.length + " log length");
+						for(var i = 0; i < data.length; i++) {
+							var row = document.createElement("tr");
+							row.id = "row" + data[i].id;
+
+							var date = new Date(data[i].date);
+							
+							var logDate = document.createElement("td");
+							logDate.innerHTML = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
+							console.log(data[i].date);
+
+							var logNotes = document.createElement("td");
+							logNotes.innerHTML = data[i].notes;
+
+							var logRemove = document.createElement("i");
+							logRemove.className = "fa fa-trash-o";
+							logRemove.style = "font-size: 30px";
+							logRemove.id = "removeLog" + data[i].id;
+
+							row.appendChild(logDate);
+							row.appendChild(logNotes);
+							row.appendChild(logRemove);
+							body.appendChild(row);
+
+							$("#removeLog" + data[i].id).hover(function() {
+								$(this).css("color", "red");
+							}, function() {
+								$(this).css("color", "black");
+							}).click({
+								id: data[i].id,
+								incident: data[i].incident
+							}, removeLog);
+						}
+					},
+				error: function(error, xhr) {
+						displayMessage("row alert alert-danger", "Error loading logs", "successUpdate", 5000);
+					}
+			});
+		}
+
+		function removeLog(event) {
+			var incidentLog = {};
+			incidentLog.id = event.data.id;
+
+			$.ajax({
+				type: "DELETE",
+				contentType: "application/json",
+				url: "http://localhost:8080/repairity/incidentREST/removeActivity",
+				data: JSON.stringify(incidentLog),
+				dataType: "json",
+				timeout: 100000,
+				success: function(data) {
+						loadIncidentLog(event.data.incident);
+						displayMessage("row alert alert-success", "Activity for " + event.data.incident + " has been removed", "successUpdate", 2000);
+					},
+				error: function(error, xhr) {
+						displayMessage("row alert alert-danger", "Activity for " + event.data.incident + " was not removed", "successUpdate", 5000);
+					}
+			});
 		}
 
 		function loadAllEmployees() {
@@ -408,11 +568,11 @@
 				tableRow.appendChild(tableRowName);
 				bodyEmpAssigned.appendChild(tableRow);
 
-				$("#tableRow" + data[i].id).hover(function() {
+/* 				$("#tableRow" + data[i].id).hover(function() {
 					$(this).css("background-color", "yellow");
 				}, function() {
 					$(this).css("background-color", "white");
-				});
+				}); */
 			}
 		}
 
@@ -469,12 +629,12 @@
 				timeout: 100000,
 				success: function(data) {
 						console.log("success for assignment");
-						displayMessage("div", "alert alert-success", "Employee Has Been Assigned!", "msgAssignEmployees");
+						displayMessage("row alert alert-success", "Employee Has Been Assigned!", "msgAssignEmployees", 2000);
 						loadEmployeesForAssignment(incident);
 						loadEmployees(incident);
 					},
 				error: function(error, xhr) {
-						console.log("error for assignment");
+						displayMessage("row alert alert-danger", "Employee was not assigned: " + error, "msgAssignEmployees", 5000);
 					}
 			});	
 		}
@@ -493,12 +653,12 @@
 				data: JSON.stringify(employeeIncident),
 				timeout: 100000,
 				success: function(data) {
-						displayMessage("div", "alert alert-success", "Assignment Has Been Removed", "msgAssignEmployees");
+						displayMessage("row alert alert-success", "Assignment Has Been Removed", "msgAssignEmployees", 2000);
 						loadEmployeesForAssignment(incident);
 						loadEmployees(incident);
 					},
 				error: function(error, xhr) {
-						displayMessage("div", "alert alert-danger", "Assignment was not removed: " + error, "msgAssignEmployees");
+						displayMessage("row alert alert-danger", "Assignment was not removed: " + error, "msgAssignEmployees", 5000);
 					}
 			});	
 		}
@@ -596,12 +756,10 @@
 				timeout : 100000,
 				success : function() {
 					listViaAjax();
-					$("#successUpdate").innerHTML = "Incident Saved";
-					$("#successUpdate").show();
-					$("#successUpdate").fadeOut(2000);
+					displayMessage("row alert alert-success", "Incident has been saved!", "successUpdate", 2000);
 				},
 				error : function(e) {
-					console.log("incident not saved...");
+					displayMessage("row alert alert-danger", "Error! Incident not saved!", "successUpdate", 5000);
 				}
 			});
 
@@ -740,12 +898,12 @@
 							document.getElementById("editAmount").value = data.amount;
 						},
 						error : function(e) {
-							console.log("error on showIncident function");
-							$("#editId").innerHTML = "Didn't work...";
+							displayMessage("row alert alert-danger", "Incident cannot be displayed", "successUpdate", 5000);
 						}
 					});
 
 			loadEmployees(incident);
+			loadIncidentLog(incident);
 		}
 	</script>
 </body>

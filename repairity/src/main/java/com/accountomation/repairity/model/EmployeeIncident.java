@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "employeeincident")
+@Table(name = "employee_incident")
 public class EmployeeIncident {
 
 	private Long id;
@@ -36,7 +36,7 @@ public class EmployeeIncident {
 	}
 
 	@Id
-	@Column(name = "eiid")
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
 		return id;
@@ -48,7 +48,7 @@ public class EmployeeIncident {
 
 	@ManyToOne(targetEntity = Employee.class)
 	@JoinColumn(name = "employee", nullable = false,
-		foreignKey = @ForeignKey(name = "fk_employeeincident_employee"))
+		foreignKey = @ForeignKey(name = "fk_employee_incident_employee"))
 	public Employee getEmployee() {
 		return employee;
 	}
@@ -59,7 +59,7 @@ public class EmployeeIncident {
 
 	@ManyToOne(targetEntity = Incident.class)
 	@JoinColumn(name = "incident", nullable = false,
-		foreignKey = @ForeignKey(name = "fk_employeeincident_incident"))
+		foreignKey = @ForeignKey(name = "fk_employee_incident_incident"))
 	public Incident getIncident() {
 		return incident;
 	}

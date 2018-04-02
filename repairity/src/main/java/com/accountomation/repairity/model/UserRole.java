@@ -25,7 +25,7 @@ public class UserRole {
 
 
 	@Id
-	@Column(name = "role_id")
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public long getRoleId() {
 		return roleId;
@@ -37,7 +37,7 @@ public class UserRole {
 
 
 
-	@Column(name = "role_role")
+	@Column(name = "role")
 	public String getRole() {
 		return role;
 	}

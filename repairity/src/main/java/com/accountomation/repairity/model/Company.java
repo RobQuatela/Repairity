@@ -31,7 +31,7 @@ public class Company {
 	}
 
 	@Id
-	@Column(name = "co_id")
+	@Column(name = "id")
 	public String getId() {
 		return id;
 	}
@@ -40,7 +40,7 @@ public class Company {
 		this.id = id;
 	}
 
-	@Column(name = "co_name")
+	@Column(name = "name")
 	public String getName() {
 		return name;
 	}

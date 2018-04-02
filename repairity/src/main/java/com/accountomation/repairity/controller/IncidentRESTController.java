@@ -1,10 +1,12 @@
 package com.accountomation.repairity.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.accountomation.repairity.model.Incident;
+import com.accountomation.repairity.model.IncidentLog;
 import com.accountomation.repairity.service.IncidentService;
 
 @RestController
@@ -82,5 +85,50 @@ public class IncidentRESTController {
 		}
 		
 		return new ResponseEntity<List<Incident>>(incidents, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/getActivityLog")
+	public ResponseEntity<List<IncidentLog>> logActivity(@RequestParam("id") String incident) {
+
+		List<IncidentLog> incidentLog = new ArrayList<>();
+		Incident incidentRecord = new Incident();
+		incidentRecord.setId(incident);
+		
+		try {
+			incidentLog = incidentService.listIncidentLog(incidentRecord);
+		} catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<List<IncidentLog>>(HttpStatus.EXPECTATION_FAILED);
+		}
+		
+		return new ResponseEntity<List<IncidentLog>>(incidentLog, HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/logActivity")
+	public ResponseEntity<IncidentLog> logActivity(@RequestBody IncidentLog incidentLog) {
+		IncidentLog il = new IncidentLog();
+		
+		try {
+			il = incidentService.logActivity(incidentLog);
+		} catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<IncidentLog>(HttpStatus.EXPECTATION_FAILED);
+		}
+		
+		return new ResponseEntity<IncidentLog>(il, HttpStatus.OK);
+	}
+	
+	@DeleteMapping(value = "/removeActivity")
+	public ResponseEntity<IncidentLog> removeActivity(@RequestBody IncidentLog incidentLog) {
+		IncidentLog il = new IncidentLog();
+		
+		try {
+			incidentService.removeLog(incidentLog);
+		} catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<IncidentLog>(HttpStatus.EXPECTATION_FAILED);
+		}
+		
+		return new ResponseEntity<IncidentLog>(il, HttpStatus.OK);
 	}
 }

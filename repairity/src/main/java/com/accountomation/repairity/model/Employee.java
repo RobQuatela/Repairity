@@ -17,7 +17,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "tbemployee")
+@Table(name = "employee")
 public class Employee {
 
 	private String id;
@@ -37,7 +37,7 @@ public class Employee {
 	}
 
 	@Id
-	@Column(name = "emp_id")
+	@Column(name = "id")
 	public String getId() {
 		return id;
 	}
@@ -46,7 +46,7 @@ public class Employee {
 		this.id = id;
 	}
 
-	@Column(name = "emp_name")
+	@Column(name = "name")
 	public String getName() {
 		return name;
 	}
@@ -57,7 +57,7 @@ public class Employee {
 
 	@ManyToOne(targetEntity = Company.class)
 	@JoinColumn(name = "company", nullable = false,
-		foreignKey = @ForeignKey(name = "fk_tbemployee_company"))
+		foreignKey = @ForeignKey(name = "fk_employee_company"))
 	public Company getCompany() {
 		return company;
 	}

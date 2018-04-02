@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tbincident")
+@Table(name = "incident")
 public class Incident {
 
 	private String id;
@@ -46,7 +46,7 @@ public class Incident {
 	}
 
 	@Id
-	@Column(name = "incident_id")
+	@Column(name = "id")
 	public String getId() {
 		return id;
 	}
@@ -55,7 +55,7 @@ public class Incident {
 		this.id = id;
 	}
 
-	@Column(name = "incident_status")
+	@Column(name = "status")
 	public String getStatus() {
 		return status;
 	}
@@ -64,7 +64,7 @@ public class Incident {
 		this.status = status;
 	}
 
-	@Column(name = "incident_start")
+	@Column(name = "date_start")
 	public Date getStart() {
 		return start;
 	}
@@ -73,7 +73,7 @@ public class Incident {
 		this.start = start;
 	}
 
-	@Column(name = "incident_stop")
+	@Column(name = "date_stop")
 	public Date getStop() {
 		return stop;
 	}
@@ -82,7 +82,7 @@ public class Incident {
 		this.stop = stop;
 	}
 
-	@Column(name = "incident_customer")
+	@Column(name = "cutomer")
 	public String getCustomer() {
 		return customer;
 	}
@@ -91,7 +91,7 @@ public class Incident {
 		this.customer = customer;
 	}
 
-	@Column(name = "incident_address")
+	@Column(name = "address")
 	public String getAddress() {
 		return address;
 	}
@@ -100,7 +100,7 @@ public class Incident {
 		this.address = address;
 	}
 
-	@Column(name = "incident_city")
+	@Column(name = "city")
 	public String getCity() {
 		return city;
 	}
@@ -109,7 +109,7 @@ public class Incident {
 		this.city = city;
 	}
 
-	@Column(name = "incident_state")
+	@Column(name = "state")
 	public String getState() {
 		return state;
 	}
@@ -118,7 +118,7 @@ public class Incident {
 		this.state = state;
 	}
 
-	@Column(name = "incident_zip")
+	@Column(name = "zip")
 	public String getZip() {
 		return zip;
 	}
@@ -127,7 +127,7 @@ public class Incident {
 		this.zip = zip;
 	}
 
-	@Column(name = "incident_complaint")
+	@Column(name = "complaint")
 	public String getComplaint() {
 		return complaint;
 	}
@@ -136,7 +136,7 @@ public class Incident {
 		this.complaint = complaint;
 	}
 
-	@Column(name = "incident_phone")
+	@Column(name = "phone")
 	public String getPhone() {
 		return phone;
 	}
@@ -145,7 +145,7 @@ public class Incident {
 		this.phone = phone;
 	}
 
-	@Column(name = "incident_amount")
+	@Column(name = "amount")
 	public double getAmount() {
 		return amount;
 	}
