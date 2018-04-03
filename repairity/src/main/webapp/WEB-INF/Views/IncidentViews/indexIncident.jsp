@@ -509,13 +509,59 @@
 						</div>
 					</div>
 				</div>
+				<div id="editEmployee">
+					<div class="row mb-3">
+						<div class="col-8">
+							<h1 class="display-4">Edit Employee</h1>
+						</div>
+						<div class="col-2">
+							<button class="btn btn-success pull-right" style="background-color: transparent;" id="btnUpdateEmployee">
+								<i class="material-icons text-success" style="font-size: 80px;">check</i>
+							</button>
+						</div>
+						<div class="col-2">
+							<button class="btn btn-danger pull-right" style="background-color: transparent;" id="btnCancelUpdateEmployee">
+								<i class="material-icons text-danger" style="font-size: 80px;">cancel</i>
+							</button>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12">
+							<div id="msgPageEmployeeEdit"></div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12">
+							<div class="mb-2">
+								<div class="h4" id="editEmployeeNo"></div>
+							</div>
+							<div class="mb-2">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Name:</span>
+									<input type="text" id="editEmployeeName" class="form-control">
+								</div>
+							</div>
+							<div class="mb-2">
+								<div class="input-group-prepend">
+									<label class="input-group-text" for="editEmployeeCompany">Company:</label>
+									<select class="customer-select form-control" id="editEmployeeCompany">
+										<option value="SSB">Atlanta</option>
+										<option value="HOU">Houston</option>
+										<option value="NJC">Toms River</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
+		</div>
 		</div>
 		<div class="row">
 			<div class="col-12 container-fluid">
-				<footer class="footer">
-				<div id="footerTitle" class="text-center"></div>
-				</footer>
+				<div class="footer text-center">
+				<div id="footerTitle"></div>
+				</div>
 			</div>
 		</div>
 		<script>
@@ -534,23 +580,33 @@
 								$("#logActivity").hide();
 								$("#newIncident").hide();
 								$("#newEmployee").hide();
+								$("#editEmployee").hide();
 								$("#msgPageEmployeeNew").hide();
 								$("#msgPageEmployee").hide();
+								$("#navIncident").css("background-color", "#CEEAFF");
+								$("#navIncident").css("color", "#6CBEFD");
 
 								$("#navEmployee").click(function(event) {
 									$("#pageIncident").fadeOut(800);
 									$("#pageEmployee").fadeIn(2000);
+									$(this).css("background-color", "#CEEAFF");
+									$(this).css("color", "#6CBEFD");
+									$("#navIncident").css("background-color", "#6CBEFD");
+									$("#navIncident").css("color", "#CEEAFF");
 								});
 
 								$("#navIncident").click(function(event) {
 									$("#pageEmployee").fadeOut(800);
 									$("#pageIncident").fadeIn(2000);
+									$(this).css("background-color", "#CEEAFF");
+									$(this).css("color", "#6CBEFD");
+									$("#navEmployee").css("background-color", "#6CBEFD");
+									$("#navEmployee").css("color", "#CEEAFF");
 								});
 
 								$("#btnUpdateIncident").click(function(event) {
 									event.preventDefault();
 									updateIncident();
-									displ
 								});
 
 								$("#btnAssignEmployees")
@@ -717,6 +773,15 @@
 									$("#displayEmployees").fadeIn(500);
 								});
 
+								$("#btnCancelUpdateEmployee").click(function(event) {
+									$("#editEmployee").fadeOut(500);
+									$("#displayEmployees").fadeIn(500);
+								});
+
+								$("#btnUpdateEmployee").click(function(event) {
+									updateEmployee();
+								});
+
 								$("#btnAddEmployee").click(function(event) {
 									newEmployee();
 								});		
@@ -766,6 +831,28 @@
 					error: function(error, xhr) {
 							displayMessage("row alert alert-danger", "ERROR: Employee not added: " + error, "msgPageEmployeeNew", 5000);
 						}
+				});
+			}
+
+			function searchEmployee() {
+				var search = $("#txtSearch").val();
+				var employee = {};
+				employee.name = search;
+
+				$.ajax({
+					type : "GET",
+					contentType : "application/json",
+					url : "http://localhost:8080/repairity/employeeREST/search",
+					data : employee,
+					dataType : "json",
+					success : function(data) {
+						listAllEmployeesPageEmployee(data);
+					},
+					error : function(error, xhr) {
+						$("#msgError").append(error);
+						$("#msgError").show();
+						$("#msgError").fadeOut(2000);
+					}
 				});
 			}
 
@@ -834,7 +921,7 @@
 								var body = document
 										.getElementById("displayLogBodyTable");
 								body.innerHTML = "";
-								console.log(data.length + " log length");
+
 								for (var i = 0; i < data.length; i++) {
 									var row = document.createElement("tr");
 									row.id = "row" + data[i].id;
@@ -851,7 +938,7 @@
 									logNotes.innerHTML = data[i].notes;
 
 									var logRemove = document.createElement("i");
-									logRemove.className = "fa fa-trash-o";
+									logRemove.className = "fa fa-trash-o pull-right";
 									logRemove.style = "font-size: 30px";
 									logRemove.id = "removeLog" + data[i].id;
 
@@ -936,15 +1023,15 @@
 					tableRowName.innerHTML = data[i].name;
 					var tableRowCompany = document.createElement("td");
 					tableRowCompany.innerHTML = data[i].company.name;
-					var btnEdit = document.createElement("button");
+ 					var btnEdit = document.createElement("button");
 					btnEdit.style = "background-color: transparent";
 					btnEdit.className = "btn pull-right";
-					btnEdit.id = "btnEditAssignment" + data[i].id;
+					btnEdit.id = "btnEditAssignment" + data[i].id; 
 					var tableRowEdit = document.createElement("i");
 					tableRowEdit.className = "material-icons";
 					tableRowEdit.style = "font-size: 20px";
 					tableRowEdit.innerHTML = "mode_edit";
-					tableRowEdit.id = "editAssignment" + data[i].id;
+					tableRowEdit.id = "btnEditEmployee" + data[i].id;
 
 					btnEdit.appendChild(tableRowEdit);
 					tableRow.appendChild(tableRowId);
@@ -958,14 +1045,48 @@
 					}, function() {
 						$(this).css("color", "black");
 					}).click({
-						id : data[i].id
+						id : data[i].id,
+						name: data[i].name,
+						company: data[i].company.id
 					}, editEmployee);
 
 				}
 			}
 
 			function editEmployee(event) {
-				
+				$("#displayEmployees").slideUp();
+				document.getElementById("editEmployeeNo").innerHTML = event.data.id;
+				document.getElementById("editEmployeeName").value = event.data.name;
+				document.getElementById("editEmployeeCompany").value = event.data.company;
+				$("#editEmployee").show();
+			}
+
+			function updateEmployee() {
+				var employee = {};
+				var company = {};
+
+				employee.id = document.getElementById("editEmployeeNo").innerHTML;
+				employee.name = $("#editEmployeeName").val();
+				company.id = $("#editEmployeeCompany").val();
+				employee.company = company;
+
+				$.ajax({
+					type: "PUT",
+					contentType: "application/json",
+					url: "http://localhost:8080/repairity/employeeREST/update",
+					data: JSON.stringify(employee),
+					dataType: "json",
+					timeout: 100000,
+					success: function(data) {
+							loadAllEmployeesPageEmployee();
+							$("#editEmployee").fadeOut(500);
+							$("#displayEmployees").fadeIn(500);
+							displayMessage("row alert alert-success", data.name + "has been updated!", "msgPageEmployee", 2000);
+						},
+					error: function(error, xhr) {
+							displayMessage("row alert alert-danger", "Employee was not updated: " + error, "msgPageEmployeeEdit", 5000);
+						}
+				});
 			}
 
 			function loadAllEmployees() {
@@ -1075,12 +1196,6 @@
 					tableRow.appendChild(tableRowHeader);
 					tableRow.appendChild(tableRowName);
 					bodyEmpAssigned.appendChild(tableRow);
-
-					/* 				$("#tableRow" + data[i].id).hover(function() {
-										$(this).css("background-color", "yellow");
-									}, function() {
-										$(this).css("background-color", "white");
-									}); */
 				}
 			}
 
@@ -1320,22 +1435,30 @@
 					//information for card header
 					var cardHeader = document.createElement("div");
 					cardHeader.className = "card-header";
-					cardHeader.id = "incidentHeader" + data[i].id;
-					cardHeader.style = "background: #6CBEFD;";
+					//cardHeader.id = "incidentHeader" + data[i].id;
+					cardHeader.style = "background-color: transparent;";
 					var invoice = document.createElement("div");
 					invoice.innerHTML = data[i].id;
 					invoice.style = "color: #fafdff";
 					invoice.id = "txtId" + data[i].id;
-					var edit = document.createElement("button");
+/* 					var edit = document.createElement("button");
 					edit.className = "btn btn-primary";
 					edit.id = "btnEdit" + data[i].id;
-					edit.innerHTML = "Edit";
+					edit.innerHTML = "Edit"; */
 					var headerRow = document.createElement("div");
 					headerRow.className = "row";
 					var headerCol = document.createElement("div");
-					headerCol.className = "col-10";
+					headerCol.className = "col-6 card-header";
+					headerCol.style = "background: #6CBEFD;";
+					headerCol.id = "incidentHeader" + data[i].id;
 					var headerColBtn = document.createElement("div");
-					headerColBtn.className = "col-2";
+					if(data[i].status == "Open") {
+						headerColBtn.className = "col-6 card-header bg-warning";
+					}
+					else {
+						headerColBtn.className = "col-6 card-header bg-success";
+					}
+					headerColBtn.innerHTML = data[i].status;
 					headerCol.appendChild(invoice);
 					//headerColBtn.appendChild(edit);
 					headerRow.appendChild(headerCol);
@@ -1361,7 +1484,7 @@
 
 					cardBody.appendChild(customer);
 					cardBody.appendChild(start);
-					cardBody.appendChild(status);
+					//cardBody.appendChild(status);
 					cardBody.appendChild(complaint);
 
 					card.appendChild(cardHeader);
