@@ -29,7 +29,6 @@ public class IncidentRESTController {
 	@GetMapping(value = "/search")
 	public ResponseEntity<Incident> getIncident(@RequestParam("id") String id) {
 		Incident incident = incidentService.getIncident(id);
-		System.out.println("Request invocie no: " + id);
 		
 		if(incident == null) {
 			return new ResponseEntity<Incident>(HttpStatus.NOT_FOUND);
@@ -57,7 +56,6 @@ public class IncidentRESTController {
 		Incident updatedIncident = new Incident();
 		
 		try {
-			System.out.println(incdt.getId() + " " + incdt.getStart());
 			updatedIncident = incidentService.updateIncident(incdt);
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -70,12 +68,12 @@ public class IncidentRESTController {
 	}
 	
 	@GetMapping(value = "/list")
-	public ResponseEntity<List<Incident>> listIncidents(@RequestParam("id") String id) {
+	public ResponseEntity<List<Incident>> listIncidents(@RequestParam("customer") String customer) {
 
 		List<Incident> incidents;
 		
-		if(!id.equals("")) {
-			incidents = incidentService.getIncidents(id);
+		if(!customer.equals("")) {
+			incidents = incidentService.getIncidents(customer);
 		} else {
 			incidents = incidentService.getIncidents();
 		}
@@ -83,6 +81,18 @@ public class IncidentRESTController {
 		if(incidents == null) {
 			return new ResponseEntity<List<Incident>>( HttpStatus.NOT_FOUND);
 		}
+		
+		return new ResponseEntity<List<Incident>>(incidents, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/listByStatus")
+	public ResponseEntity<List<Incident>> listIncidentsByStatus(@RequestParam("status") String status) {
+		List<Incident> incidents = new ArrayList<>();
+		
+		incidents = incidentService.getIncidentsByStatus(status);
+		
+		if(incidents == null)
+			return new ResponseEntity<List<Incident>>(incidents, HttpStatus.NOT_FOUND);
 		
 		return new ResponseEntity<List<Incident>>(incidents, HttpStatus.OK);
 	}

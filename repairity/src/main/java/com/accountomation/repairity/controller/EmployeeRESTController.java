@@ -57,12 +57,11 @@ public class EmployeeRESTController {
 		List<Employee> emps = new ArrayList<>();
 		Incident incident = new Incident();
 		incident.setId(invoice);
-		System.out.println("incident invoice: " + incident.getId());
+
 		emps = employeeService.getEmployeesByIncident(incident);
-		System.out.println("Emps for incident: " + incident.getId() + ": " + emps.size());
 		
 		if(emps.isEmpty())
-			return new ResponseEntity<List<Employee>>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<List<Employee>>(emps, HttpStatus.NOT_FOUND);
 		
 		return new ResponseEntity<List<Employee>>(emps, HttpStatus.OK);
 	}
@@ -97,7 +96,7 @@ public class EmployeeRESTController {
 		
 		try {
 			savedEmployee = employeeService.saveEmployee(employee);
-			//companyService.addEmployee(company, employee);
+
 		} catch(Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<Employee>(HttpStatus.EXPECTATION_FAILED);
@@ -109,7 +108,7 @@ public class EmployeeRESTController {
 	@GetMapping(value = "/search")
 	public ResponseEntity<List<Employee>> searchEmployees(@RequestParam("name") String name) {
 		List<Employee> emps = new ArrayList<>();
-		System.out.println(name);
+
 		try {
 			emps = employeeService.searchEmployees(name);
 		} catch(Exception e) {

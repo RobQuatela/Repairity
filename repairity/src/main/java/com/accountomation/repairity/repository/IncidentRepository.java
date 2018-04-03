@@ -19,5 +19,7 @@ public interface IncidentRepository {
 	
 	public List<Incident> list(String id);
 	
+	public List<Incident> listByStatus(String status);
+	
 	public void log(IncidentLog incidentLog);
 }

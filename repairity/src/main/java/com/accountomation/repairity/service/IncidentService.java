@@ -21,6 +21,8 @@ public interface IncidentService {
 	
 	public List<Incident> getIncidents(String id);
 	
+	public List<Incident> getIncidentsByStatus(String status);
+	
 	public IncidentLog logActivity(IncidentLog incidentLog);
 	
 	public List<IncidentLog> listIncidentLog(Incident incident);

@@ -22,17 +22,18 @@ public class IncidentController {
 	@Autowired
 	private IncidentService incidentService;
 	
-	@RequestMapping("/index")
+/*	@RequestMapping("/index")
 	public String showHomePage() {
 		return "/IncidentViews/index";
-	}
+	}*/
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/")
 	public String vewIncident(Model model) {
+		//return "/IncidentViews/indexIncident";
 		return "/IncidentViews/indexIncident";
 	}
 	
-	@RequestMapping("/assign")
+	/*@RequestMapping("/assign")
 	public String assignEmployees(Model model) {
 		return "/IncidentViews/assignEmployees";
 	}
@@ -85,5 +86,5 @@ public class IncidentController {
 		Incident incident = incidentService.getIncident(invoiceNo);
 		System.out.println("Request invocie no: " + incident.getId());
 		return incident;
-	}
+	}*/
 }

@@ -61,8 +61,8 @@ public class IncidentServiceImpl implements IncidentService {
 	}
 
 	@Override
-	public List<Incident> getIncidents(String id) {
-		return incidentRepository.list(id);
+	public List<Incident> getIncidents(String customer) {
+		return incidentRepository.list(customer);
 	}
 
 	@Override
@@ -78,6 +78,11 @@ public class IncidentServiceImpl implements IncidentService {
 	@Override
 	public void removeLog(IncidentLog incidentLog) {
 		incidentLogRepository.delete(incidentLog);
+	}
+
+	@Override
+	public List<Incident> getIncidentsByStatus(String status) {
+		return incidentRepository.listByStatus(status);
 	}
 	
 	

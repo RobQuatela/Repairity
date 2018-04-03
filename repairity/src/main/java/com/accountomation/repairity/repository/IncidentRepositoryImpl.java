@@ -88,7 +88,7 @@ public class IncidentRepositoryImpl implements IncidentRepository {
 	}
 
 	@Override
-	public List<Incident> list(String id) {
+	public List<Incident> list(String customer) {
 		List<Incident> incidents = new ArrayList<>();
 		try {
 			Session session = sessionFactory.getCurrentSession();
@@ -96,8 +96,28 @@ public class IncidentRepositoryImpl implements IncidentRepository {
 			Root<Incident> root = criteria.from(Incident.class);
 			criteria
 				.select(root)
-				.where(session.getCriteriaBuilder().like(root.get("id"), "%" + id + "%"));
+				.where(session.getCriteriaBuilder().like(root.get("customer"), "%" + customer + "%"));
 			Query<Incident> query = session.createQuery(criteria);			
+			incidents = query.getResultList();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return incidents;
+	}
+
+	@Override
+	public List<Incident> listByStatus(String status) {
+		List<Incident> incidents = new ArrayList<>();
+		
+		try {
+			Session session = sessionFactory.getCurrentSession();
+			CriteriaQuery<Incident> criteria = session.getCriteriaBuilder().createQuery(Incident.class);
+			Root<Incident> root = criteria.from(Incident.class);
+			criteria
+				.select(root)
+				.where(session.getCriteriaBuilder().equal(root.get("status"), status));
+			Query<Incident> query = session.createQuery(criteria);
 			incidents = query.getResultList();
 		} catch(Exception e) {
 			e.printStackTrace();

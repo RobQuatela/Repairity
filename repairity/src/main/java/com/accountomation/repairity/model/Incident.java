@@ -82,7 +82,7 @@ public class Incident {
 		this.stop = stop;
 	}
 
-	@Column(name = "cutomer")
+	@Column(name = "customer")
 	public String getCustomer() {
 		return customer;
 	}
