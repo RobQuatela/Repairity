@@ -42,8 +42,9 @@ public class HibernateConfig {
     	//dataSource.setDriverClassName("com.mysql.jdbc.Driver");
     	dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
     	//dataSource.setUrl("jdbc:mysql://LocalHost:3306/repairity?useSSL=false");
-    	dataSource.setUrl("jdbc:sqlserver://HOSTNAME\\SQLEXPRESS;integratedSecurity=true;databaseName=repairity");
-    	dataSource.setUsername("TESTDOMAIN\\test");
+    	//dataSource.setUrl("jdbc:sqlserver://ZEUS\\SQLEXPRESS;integratedSecurity=true;databaseName=repairityTEST");
+    	dataSource.setUrl("jdbc:sqlserver://ZEUS\\SQLEXPRESS;databaseName=repairityTEST");
+    	dataSource.setUsername("");
     	dataSource.setPassword("");
     	
     	return dataSource;
@@ -51,7 +52,7 @@ public class HibernateConfig {
     
     private final Properties hibernateProperties() {
     	Properties hibernateProperties = new Properties();
-    	hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "create");
+    	hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "update");
     	//hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
     	hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.SQLServerDialect");
     	hibernateProperties.setProperty("hibernate.show_sql", "true");

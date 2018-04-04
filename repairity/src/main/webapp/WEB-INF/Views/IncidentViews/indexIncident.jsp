@@ -25,6 +25,43 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<style>
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+</style>
 <title>Repairity</title>
 </head>
 <body style="background: #CEEAFF; overflow-x: hidden;">
@@ -72,7 +109,7 @@
 											id="customerName" onkeyup="listViaAjax()">
 										<button class="btn" id="btnNewIncident"
 											style="background-color: transparent; border-color: #6CBEFD">
-											<i class="material-icons"
+											<i class="material-icons" title="Add New Incident"
 												style="font-size: 30px; color: #6CBEFD;">add</i>
 										</button>
 									</div>
@@ -100,7 +137,7 @@
 									<h1 class="lead d-flex p-2">Incident Information</h1>
 								</div>
 								<div class="col-4">
-									<button class="btn pull-right" id="btnUpdateIncident"
+									<button class="btn pull-right" id="btnUpdateIncident" title="Update Incident"
 										style="background-color: transparent;">
 										<i class="material-icons" style="font-size: 35px;">save</i>
 									</button>
@@ -186,7 +223,7 @@
 									<div class="lead d-flex p-2">Employees Assigned</div>
 								</div>
 								<div class="col-4">
-									<button class="btn pull-right" id="btnAssignEmployees"
+									<button class="btn pull-right" id="btnAssignEmployees" title="Assign Employees"
 										style="background-color: transparent;">
 										<i class="material-icons" style="font-size: 35px;">person_add</i>
 									</button>
@@ -211,7 +248,7 @@
 									<div class="lead d-flex p-2">Incident Log</div>
 								</div>
 								<div class="col-4">
-									<button class="btn pull-right" id="btnLogActivity"
+									<button class="btn pull-right" id="btnLogActivity" title="Log Activity"
 										style="background-color: transparent;">
 										<i class="material-icons" style="font-size: 35px;">assignment</i>
 									</button>
@@ -431,7 +468,7 @@
 									<input type="text" id="txtSearch"
 										placeholder="Search for Employee Name"
 										onkeyup="searchEmployee()" class="form-control" />
-									<button class="btn" id="btnNewEmployee"
+									<button class="btn" id="btnNewEmployee" title="Add New Employee"
 										style="background-color: transparent; border-color: #6CBEFD;">
 										<i class="material-icons"
 											style="font-size: 30px; color: #6CBEFD;">add</i>
@@ -579,6 +616,9 @@
 					var d = new Date(Date.now());
 					document.getElementById("footerTitle").innerHTML = "Copyright &copy; - Accountomation "
 					+ d.getFullYear();
+/* 					$(function () {
+						  $('[data-toggle="tooltip"]').tooltip()
+						}) */
 					$("#pageEmployee").hide();
 					$('#divResults').hide();
 					$('#divError').hide();
@@ -890,8 +930,8 @@
 						$("#displayEmployees").show();
 						displayMessage("row alert alert-success", data.name + " has been added!", "msgPageEmployee", 2000);
 					},
-					error : function(error, xhr) {
-						displayMessage("row alert alert-danger", "ERROR: Employee not added: " + error, "msgPageEmployeeNew", 5000);
+					error : function(jqXHR, textStatus, error) {
+						displayMessage("row alert alert-danger", "Employee not added, CODE: " + jqXHR.status, "msgPageEmployeeNew", 8000);
 					}
 				});
 			}
@@ -911,10 +951,8 @@
 				success : function(data) {
 					listAllEmployeesPageEmployee(data);
 				},
-				error : function(error, xhr) {
-					$("#msgError").append(error);
-					$("#msgError").show();
-					$("#msgError").fadeOut(2000);
+				error : function(jqXHR, textStatus, error) {
+					displayMessage("row alert alert-danger", "ERROR CODE: " + jqXHR.status, "successUpdate", 8000);
 				}
 			});
 		}
@@ -970,9 +1008,9 @@
 						+ " has been successfully added!",
 							"successUpdate", 2000);
 					},
-					error : function(error, xhr) {
+					error : function(jqXHR, textStatus, error) {
 						displayMessage("row alert alert-success",
-							"ERROR: could not add new incident: " + error,
+							"Could not add new incident, CODE: " + jqXHR.status,
 							"newIncidentMessage", 5000);
 					}
 				});
@@ -1056,10 +1094,9 @@
 							+ " has been removed",
 							"successUpdate", 2000);
 					},
-					error : function(error, xhr) {
+					error : function(jqXHR, textStatus, error) {
 						displayMessage("row alert alert-danger",
-							"Activity for " + event.data.incident
-							+ " was not removed",
+							"Activity was not removed. CODE: " + jqXHR.status,
 							"successUpdate", 5000);
 					}
 				});
@@ -1074,8 +1111,8 @@
 				success : function(data) {
 					listAllEmployeesPageEmployee(data);
 				},
-				error : function(error, xhr) {
-					console.log("Problem on loadAllEmployees: " + error);
+				error : function(jqXHR, textStatus, error) {
+					console.log("Problem on loadAllEmployees: " + jqXHR.status);
 				}
 			});
 		}
@@ -1157,8 +1194,8 @@
 						$("#displayEmployees").fadeIn(500);
 						displayMessage("row alert alert-success", data.name + " has been updated!", "msgPageEmployee", 2000);
 					},
-					error : function(error, xhr) {
-						displayMessage("row alert alert-danger", "Employee was not updated: " + error, "msgPageEmployeeEdit", 5000);
+					error : function(jqXHR, textStatus, error) {
+						displayMessage("row alert alert-danger", "Employee was not updated, CODE: " + jqXHR.status, "msgPageEmployeeEdit", 5000);
 					}
 				});
 			}
@@ -1366,9 +1403,9 @@
 						loadEmployeesForAssignment(incident);
 						loadEmployees(incident);
 					},
-					error : function(error, xhr) {
+					error : function(jqXHR, textStatus, error) {
 						displayMessage("row alert alert-danger",
-							"Assignment was not removed: " + error,
+							"Assignment was not removed, CODE: " + jqXHR.status,
 							"msgAssignEmployees", 5000);
 					}
 				});
@@ -1462,9 +1499,9 @@
 	
 			if (document.getElementById("editId").innerHTML == "")
 				displayMessage("row alert alert-danger", "Please select an Incident to update", "successUpdate", 4000);
-			else if (incdt.status == "Closed" && incdt.stop == null)
+			else if (incdt.status == "Closed" && $("#editStop").val() == "")
 				displayMessage("row alert alert-danger", "Please enter a close date if the incident has been closed", "successUpdate", 4000);
-			else if (incdt.status == "Open" && incdt.stop != null)
+			else if (incdt.status == "Open" && $("#editStop").val() != "")
 				displayMessage("row alert alert-danger", "Open Incidents cannot have a close date", "successUpdate", 4000);else {
 				$
 					.ajax({
@@ -1480,9 +1517,9 @@
 								"Incident has been saved!",
 								"successUpdate", 2000);
 						},
-						error : function(e) {
+						error : function(jqXHR, textStatus, error) {
 							displayMessage("row alert alert-danger",
-								"Error! Incident not saved!",
+								"Incident not saved, CODE: " + jqXHR.status,
 								"successUpdate", 5000);
 						}
 					});
@@ -1629,9 +1666,9 @@
 						document.getElementById("editPhone").value = data.phone;
 						document.getElementById("editAmount").value = data.amount;
 					},
-					error : function(e) {
+					error : function(jqXHR, textStatus, error) {
 						displayMessage("row alert alert-danger",
-							"Incident cannot be displayed",
+							"Incident cannot be displayed, CODE: " + jqXHR.status,
 							"successUpdate", 5000);
 					}
 				});

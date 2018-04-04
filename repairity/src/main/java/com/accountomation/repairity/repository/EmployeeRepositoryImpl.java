@@ -28,7 +28,7 @@ public class EmployeeRepositoryImpl implements EmployeeRepository {
 	@Override
 	public Employee save(Employee emp) {
 		Session session = sessionFactory.getCurrentSession();
-		session.saveOrUpdate(emp);
+		session.save(emp);
 		return emp;
 	}
 
