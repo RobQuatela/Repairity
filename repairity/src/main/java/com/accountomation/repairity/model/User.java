@@ -8,8 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "user")
+//@Entity
+//@Table(name = "user")
 public class User {
 
 	private String email;
@@ -22,8 +22,8 @@ public class User {
 		this.password = password;
 	}
 
-	@Id
-	@Column(name = "email")
+	//@Id
+	//@Column(name = "email")
 	public String getEmail() {
 		return email;
 	}
@@ -32,7 +32,7 @@ public class User {
 		this.email = email;
 	}
 
-	@Column(name = "password")
+	//@Column(name = "password")
 	public String getPassword() {
 		return password;
 	}
@@ -41,9 +41,9 @@ public class User {
 		this.password = password;
 	}
 
-	@ManyToOne(targetEntity = UserRole.class)
-	@JoinColumn(name = "role", nullable = false,
-			foreignKey = @ForeignKey(name = "fk_user_role"))
+	//@ManyToOne(targetEntity = UserRole.class)
+	//@JoinColumn(name = "role", nullable = false,
+	//		foreignKey = @ForeignKey(name = "fk_user_role"))
 	public UserRole getRole() {
 		return role;
 	}

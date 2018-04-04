@@ -10,8 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "user_role")
+//@Entity
+//@Table(name = "user_role")
 public class UserRole {
 
 	private long roleId;
@@ -24,9 +24,9 @@ public class UserRole {
 	}
 
 
-	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@Id
+	//@Column(name = "id")
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public long getRoleId() {
 		return roleId;
 	}
@@ -37,7 +37,7 @@ public class UserRole {
 
 
 
-	@Column(name = "role")
+	//@Column(name = "role")
 	public String getRole() {
 		return role;
 	}
