@@ -577,7 +577,8 @@
 			.ready(
 				function() {
 					var d = new Date(Date.now());
-					document.getElementById("footerTitle").innerHTML = "Copyright &copy; - Accountomation "
+					//document.getElementById("footerTitle").innerHTML = "Copyright &copy; - Accountomation "
+					document.getElementById("footerTitle").innerHTML = "Accountomation "
 					+ d.getFullYear();
 /* 					$(function () {
 						  $('[data-toggle="tooltip"]').tooltip()
@@ -1121,15 +1122,17 @@
 					name : data[i].name,
 					company : data[i].company.id
 				}, editEmployee);
+				//}, console.log("btnEditAssignmentClicked"));
 	
 			}
 		}
 	
 		function editEmployee(event) {
+			var company = String(event.data.company);
 			$("#displayEmployees").slideUp();
 			document.getElementById("editEmployeeNo").innerHTML = event.data.id;
 			document.getElementById("editEmployeeName").value = event.data.name;
-			document.getElementById("editEmployeeCompany").value = event.data.company;
+			document.getElementById("editEmployeeCompany").value = company;
 			$("#editEmployee").show();
 		}
 	
@@ -1496,18 +1499,10 @@
 			incdt.customer = $("#customerName").val();
 		}
 	
-/* 		function display(data) {
-			$('#invoiceNoResponse').html("Invoice Detail For: " + data.id);
-			$('#status').html("Status: " + data.status);
-			$('#customerName').html("Customer: " + data.customer);
-			$('#complaint').html("Incident: " + data.complaint);
-			$('#divResults').show();
-		} */
-	
 		function displayList(data) {
 			var resultList = document.getElementById("resultList");
 			resultList.innerHTML = "";
-			resultList.height = $(document).height();
+			//resultList.height = $(document).height();
 			for (var i = 0; i < data.length; i++) {
 				var row = document.createElement("div");
 				row.className = "row";
@@ -1515,24 +1510,25 @@
 				col.className = "col-12";
 				var card = document.createElement("div");
 				card.className = "card";
-	
+				var invoiceNo = data[i].id.toString();
+
 				//information for card header
 				var cardHeader = document.createElement("div");
 				cardHeader.className = "card-header";
 				//cardHeader.id = "incidentHeader" + data[i].id;
 				cardHeader.style = "background-color: transparent;";
 				var invoice = document.createElement("div");
-				invoice.innerHTML = data[i].id;
+				invoice.innerHTML = invoiceNo;
 				invoice.style = "color: #fafdff";
-				invoice.id = "txtId" + data[i].id;
+				invoice.id = "txtId" + invoiceNo;
 				var headerRow = document.createElement("div");
 				headerRow.className = "row";
 				var headerCol = document.createElement("div");
 				headerCol.className = "col-6 card-header";
 				headerCol.style = "background: #6CBEFD;";
-				headerCol.id = "incidentHeader" + data[i].id;
+				headerCol.id = "incidentHeader" + invoiceNo;
 				var headerColBtn = document.createElement("div");
-				if (data[i].status == "Open") {
+				if (data[i].status === "Open") {
 					headerColBtn.className = "col-6 card-header bg-warning";
 				} else {
 					headerColBtn.className = "col-6 card-header bg-success";
@@ -1571,29 +1567,20 @@
 				row.appendChild(col);
 				resultList.appendChild(row);
 	
-				//function to pass value through controller to edit page
-				$("#btnEdit" + data[i].id).click({
-					id : data[i].id
-				}, editIncident);
 				//function to change color of card header when mouse hovers
-				$("#incidentHeader" + data[i].id).hover(function() {
+				$("#incidentHeader" + invoiceNo).hover(function() {
 					$(this).css("background-color", "#CEEAFF");
 				}, function() {
 					$(this).css("background-color", "#6CBEFD");
 				});
 				//function to populate data to right side when card header is clicked
-				$("#incidentHeader" + data[i].id).click({
+				$("#incidentHeader" + invoiceNo).click({
 					id : data[i].id
 				}, showIncident);
 			}
 	
 			$('#divError').hide();
 			$('#searchResults').show();
-		}
-	
-		function editIncident(event) {
-			window.location.href = "/repairity/incident/edit?id="
-			+ event.data.id;
 		}
 	
 		function showIncident(event) {
@@ -1608,9 +1595,9 @@
 					data : incident,
 					dataType : 'json',
 					success : function(data) {
-						console.log("success on showIncident function "
-							+ data.id);
-						document.getElementById("editId").innerHTML = data.id;
+						var invoiceNo = data.id.toString();
+
+						document.getElementById("editId").innerHTML = invoiceNo;
 						document.getElementById("editCustomer").value = data.customer;
 						document.getElementById("editStart").valueAsDate = new Date(
 							data.start);
@@ -1620,7 +1607,11 @@
 						else
 							document.getElementById("editStop").value = "";
 						document.getElementById("editComplaint").value = data.complaint;
-						document.getElementById("editStatus").value = data.status;
+						console.log(data.status);
+						if(data.status === "Open")
+							document.getElementById("editStatus").value = "Open";
+						else
+							document.getElementById("editStatus").value = "Closed";
 						document.getElementById("editAddress").value = data.address;
 						document.getElementById("editCity").value = data.city;
 						document.getElementById("editState").value = data.state;
